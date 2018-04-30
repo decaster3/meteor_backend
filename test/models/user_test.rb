@@ -7,13 +7,13 @@ class UserTest < ActiveSupport::TestCase
 
   def setup
     @user = User.new(
-      phone: '+71231212123',
+      phone: '1' * 9,
       password: 'password',
-      password_confirmation: 'password',
+      password_confirmation: 'password'
     )
   end
 
-  test 'user should be valid' do,
+  test 'user should be valid' do
     assert @user.valid?
   end
 end
