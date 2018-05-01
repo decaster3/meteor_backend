@@ -1,13 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  phone: MyPhoneNumber1
-  # password: MyPassword1
-  # password_confirmation: MyPassword1
-  password_digest: $2a$10$O2G/36LiGYvTUvdzeDtP0efLHQQ.JdYWanj7NxlruTKOT0VabBHdK
-
-two:
-  phone: MyPhoneNumber2
-  # password: MyPassword2
-  # password_confirmation: MyPassword2
-  password_digest: $2a$10$bkb3D2RfE3TuB9IAT1oI2Ollm9yzZRDgUJsHu/ByJWTeD8YtOp7u6
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
