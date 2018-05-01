@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  phone: MyString
+  phone: MyPhoneNumber1
+  # password: MyPassword1
+  # password_confirmation: MyPassword1
+  password_digest: $2a$10$O2G/36LiGYvTUvdzeDtP0efLHQQ.JdYWanj7NxlruTKOT0VabBHdK
 
 two:
-  phone: MyString
+  phone: MyPhoneNumber2
+  # password: MyPassword2
+  # password_confirmation: MyPassword2
+  password_digest: $2a$10$bkb3D2RfE3TuB9IAT1oI2Ollm9yzZRDgUJsHu/ByJWTeD8YtOp7u6
