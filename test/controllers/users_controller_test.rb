@@ -15,8 +15,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: {
         user: {
           phone: @user.phone,
-          password: 'MyPassword1',
-          password_confirmation: 'MyPassword1'
+          email: @user.email,
+          # password: 'MyPassword1',
+          # password_confirmation: 'MyPassword1'
         }
       }, as: :json
     end
@@ -33,8 +34,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@user), params: {
       user: {
         phone: @user.phone,
-        password: 'MyPassword1',
-        password_confirmation: 'MyPassword1'
+        email: @user.email,
+        # password: 'MyPassword1',
+        # password_confirmation: 'MyPassword1'
       }
     }, as: :json
     assert_response 200
