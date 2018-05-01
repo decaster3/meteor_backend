@@ -1,0 +1,3 @@
+class OptionName < ApplicationRecord
+  has_many :option_values
+end
