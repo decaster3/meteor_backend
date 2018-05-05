@@ -1,51 +1,38 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :update, :destroy]
+  before_action :set_product, only: [:update, :destroy, :show]
 
-  # GET /products
   def index
-    @products = Product.all
-
-    render json: @products
+    @product = Products.all
+    json_response(@products)
   end
 
-  # GET /products/1
-  def show
-    render json: @product
+  def show 
+    json_response(@product)
   end
 
-  # POST /products
-  def create
-    @product = Product.new(product_params)
-
-    if @product.save
-      render json: @product, status: :created, location: @product
-    else
-      render json: @product.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /products/1
   def update
-    if @product.update(product_params)
-      render json: @product
-    else
-      render json: @product.errors, status: :unprocessable_entity
-    end
+    @product.update(product_params)
+    json_response @product
   end
 
-  # DELETE /products/1
+  def create
+    @product = Product.create!(product_params)
+    print product_params
+    json_response @product, :created 
+  end
+
   def destroy
     @product.destroy
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def product_params
-      params.require(:product).permit(:name, :description)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:name, :description, option_names_attributes: [:name])
+  end
 end
