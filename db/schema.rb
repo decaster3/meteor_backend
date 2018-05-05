@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_01_180808) do
+ActiveRecord::Schema.define(version: 2018_05_05_200933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 2018_05_01_180808) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -68,10 +70,22 @@ ActiveRecord::Schema.define(version: 2018_05_01_180808) do
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "subcategory_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_taggings_on_product_id"
+    t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
+  end
+
   add_foreign_key "option_names", "products"
   add_foreign_key "option_values", "option_names"
   add_foreign_key "product_instances", "products"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "product_instances"
+  add_foreign_key "products", "categories"
   add_foreign_key "subcategories", "categories"
+  add_foreign_key "taggings", "products"
+  add_foreign_key "taggings", "subcategories"
 end

@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:update, :destroy, :show]
 
   def index
-    @product = Products.all
+    @products = Product.all
     json_response(@products)
   end
 
@@ -33,6 +33,8 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, option_names_attributes: [:name])
+    params.require(:product).permit(:name, :description, :category_id,
+      subcategories_attributes: [:subcategory, :category_id],
+      option_names_attributes: [:name])
   end
 end
