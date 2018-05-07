@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:update, :destroy, :show]
 
   def index
-    @products = Product.all
+    @products = Product.all_attributes
     json_response(@products)
   end
 
