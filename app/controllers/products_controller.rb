@@ -17,7 +17,6 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.create!(product_params)
-    print product_params
     json_response @product, :created 
   end
 
@@ -33,7 +32,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :category_id,
+    params.permit(:name, :description, :category_id, :image,
       subcategories_attributes: [:subcategory, :category_id],
       option_names_attributes: [:name])
   end
