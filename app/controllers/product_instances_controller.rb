@@ -28,7 +28,6 @@ class ProductInstancesController < ApplicationController
   end
 
   def set_product_instance
-    puts params
     @product_instance = @product.product_instances.find_by(id: params[:id]).option_values if @product
   end
 
