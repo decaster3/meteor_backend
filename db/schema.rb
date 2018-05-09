@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_09_144253) do
+ActiveRecord::Schema.define(version: 2018_05_09_192950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,14 @@ ActiveRecord::Schema.define(version: 2018_05_09_144253) do
     t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
   end
 
+  create_table "toppings", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_toppings_on_category_id"
+  end
+
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
   add_foreign_key "product_instances", "products"
@@ -109,4 +117,5 @@ ActiveRecord::Schema.define(version: 2018_05_09_144253) do
   add_foreign_key "subcategories", "categories"
   add_foreign_key "taggings", "products"
   add_foreign_key "taggings", "subcategories"
+  add_foreign_key "toppings", "categories"
 end

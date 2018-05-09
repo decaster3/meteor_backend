@@ -22,7 +22,7 @@ class SubcategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
+    @subcategory.destroy
     head :no_content
   end
 
