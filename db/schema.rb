@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_09_192950) do
+ActiveRecord::Schema.define(version: 2018_05_09_201310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "Cities_Products", id: false, force: :cascade do |t|
+    t.bigint "Product_id", null: false
+    t.bigint "City_id", null: false
+  end
+
+  create_table "Cities_Toppings", id: false, force: :cascade do |t|
+    t.bigint "City_id", null: false
+    t.bigint "Topping_id", null: false
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -37,6 +47,31 @@ ActiveRecord::Schema.define(version: 2018_05_09_192950) do
   end
 
   create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.json "schedule"
+    t.bigint "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_cities_on_country_id"
+  end
+
+  create_table "cities_products", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "city_id", null: false
+  end
+
+  create_table "cities_toppings", id: false, force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "topping_id", null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -108,6 +143,7 @@ ActiveRecord::Schema.define(version: 2018_05_09_192950) do
     t.index ["category_id"], name: "index_toppings_on_category_id"
   end
 
+  add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
   add_foreign_key "product_instances", "products"

@@ -17,7 +17,13 @@ class ToppingsController < ApplicationController
   end
 
   def create
-    @category.toppings.create!(topping_params)
+    @topping = Topping.new(topping_params)
+    if @topping.save
+      @category.toppings << @topping
+      params[:cities_attributes].each do |city|
+        City.find(city[:city_id]).toppings << @category
+      end
+    end
     json_response @category, :created 
   end
 
@@ -37,7 +43,7 @@ class ToppingsController < ApplicationController
   end
 
   def topping_params
-    params.permit(:name, :image)
+    params.permit(:name)
   end
 
 end

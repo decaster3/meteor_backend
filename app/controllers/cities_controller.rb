@@ -1,51 +1,43 @@
 class CitiesController < ApplicationController
-  before_action :set_city, only: [:show, :update, :destroy]
+  before_action :set_country
+  before_action :set_city, only: [:update, :destroy, :show]
 
-  # GET /cities
   def index
     @cities = City.all
-
-    render json: @cities
+    json_response(@cities)
   end
 
-  # GET /cities/1
-  def show
-    render json: @city
+  def show 
+    json_response(@city)
   end
 
-  # POST /cities
-  def create
-    @city = City.new(city_params)
-
-    if @city.save
-      render json: @city, status: :created, location: @city
-    else
-      render json: @city.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /cities/1
   def update
-    if @city.update(city_params)
-      render json: @city
-    else
-      render json: @city.errors, status: :unprocessable_entity
-    end
+    @city.update(city_params)
+    json_response @city
   end
 
-  # DELETE /cities/1
+  def create
+    @country.cities.create!(city_params)
+    json_response @country, :created 
+  end
+
   def destroy
     @city.destroy
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_city
-      @city = City.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def city_params
-      params.require(:city).permit(:name, :schedule, :country_id)
-    end
+  def city_params
+    params.permit(:name)
+  end
+
+  def set_country
+    @country = Country.find(params[:country_id])
+  end
+
+  def set_city
+    @city = @country.cities.find_by(id: params[:id]) if @country
+  end
+
 end

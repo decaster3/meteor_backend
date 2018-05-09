@@ -8,6 +8,8 @@ class Topping < ApplicationRecord
   validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
   validates :image, presence: true
 
+  has_and_belongs_to_many :cities
+
   def self.all_attributes
     toppings = []
     Topping.all.each do |topping|

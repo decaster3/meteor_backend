@@ -15,13 +15,8 @@ class CountriesController < ApplicationController
 
   # POST /countries
   def create
-    @country = Country.new(country_params)
-
-    if @country.save
-      render json: @country, status: :created, location: @country
-    else
-      render json: @country.errors, status: :unprocessable_entity
-    end
+    @country = Country.create!(country_params)
+    json_response @country, :created 
   end
 
   # PATCH/PUT /countries/1
@@ -46,6 +41,6 @@ class CountriesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def country_params
-      params.require(:country).permit(:name)
+      params.permit(:name)
     end
 end
