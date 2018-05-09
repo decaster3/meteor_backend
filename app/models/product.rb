@@ -12,11 +12,9 @@ class Product < ApplicationRecord
   validates :category, presence: true
 
   has_many :product_instances
-  has_many :option_names
   has_many :taggings
   has_many :subcategories, through: :taggings
-
-  accepts_nested_attributes_for :option_names
+  
   accepts_nested_attributes_for :subcategories
 
   def self.all_attributes
@@ -35,7 +33,6 @@ class Product < ApplicationRecord
         end
       end
       if product.image.attached?
-        puts product.image.inspect
         image_url = ImageUrl.img_url(product.image)
       end
       all << {

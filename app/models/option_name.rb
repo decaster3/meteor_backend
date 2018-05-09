@@ -3,5 +3,5 @@ class OptionName < ApplicationRecord
   validates :name, length: { minimum: 2 }
 
   has_one :option_values
-  belongs_to :product
+  belongs_to :category
 end

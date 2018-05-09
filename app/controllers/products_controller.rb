@@ -33,7 +33,6 @@ class ProductsController < ApplicationController
 
   def product_params
     params.permit(:name, :description, :category_id, :image,
-      subcategories_attributes: [:subcategory, :category_id],
-      option_names_attributes: [:name])
+      subcategories_attributes: [:subcategory, :category_id])
   end
 end
