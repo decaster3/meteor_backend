@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_09_144253) do
+ActiveRecord::Schema.define(version: 2018_05_09_210811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,33 @@ ActiveRecord::Schema.define(version: 2018_05_09_144253) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "street"
+    t.string "building"
+    t.string "apartment"
+    t.string "comment"
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_addresses_on_city_id"
+  end
+
   create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.json "schedule"
+    t.bigint "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_cities_on_country_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,6 +126,8 @@ ActiveRecord::Schema.define(version: 2018_05_09_144253) do
     t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
   end
 
+  add_foreign_key "addresses", "cities"
+  add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
   add_foreign_key "product_instances", "products"
