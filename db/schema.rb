@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 2018_05_09_210811) do
     t.index ["country_id"], name: "index_cities_on_country_id"
   end
 
+  create_table "cities_products", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "city_id", null: false
+  end
+
+  create_table "cities_toppings", id: false, force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "topping_id", null: false
+  end
+
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -126,6 +136,14 @@ ActiveRecord::Schema.define(version: 2018_05_09_210811) do
     t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
   end
 
+  create_table "toppings", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_toppings_on_category_id"
+  end
+
   add_foreign_key "addresses", "cities"
   add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
@@ -137,4 +155,5 @@ ActiveRecord::Schema.define(version: 2018_05_09_210811) do
   add_foreign_key "subcategories", "categories"
   add_foreign_key "taggings", "products"
   add_foreign_key "taggings", "subcategories"
+  add_foreign_key "toppings", "categories"
 end

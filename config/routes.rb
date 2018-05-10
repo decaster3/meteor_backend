@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :addresses
-  resources :cities
-  resources :countries
+  resources :countries do
+    resources :cities
+  end
   resources :products do
     resources :product_instances do
       resources :option_values
@@ -10,5 +11,6 @@ Rails.application.routes.draw do
   end
   resources :categories do
     resources :subcategories
+    resources :toppings
   end
 end

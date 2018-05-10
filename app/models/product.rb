@@ -8,8 +8,8 @@ class Product < ApplicationRecord
   validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
   validates :image, presence: true
 
-  belongs_to :city
-  validates :city, presence: true
+  has_and_belongs_to_many :cities
+  validates :cities, presence: true
 
   belongs_to :category
   validates :category, presence: true
@@ -17,8 +17,6 @@ class Product < ApplicationRecord
   has_many :product_instances
   has_many :taggings
   has_many :subcategories, through: :taggings
-
-  accepts_nested_attributes_for :subcategories
 
   def self.all_attributes
     all = []
