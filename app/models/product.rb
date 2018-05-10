@@ -1,15 +1,15 @@
 class Product < ApplicationRecord
   include ImageUrl
-  validates :name, :description, presence: true, uniqueness: true
+  validates :name, :description, presence: true
+  validates :name, :description, uniqueness: true
   validates :name, length: { minimum: 2 }
   validates :description, length: { minimum: 10 }
 
-  has_one_attached :image
-  validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
-  validates :image, presence: true
+  # has_one_attached :image
+  # validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
+  # validates :image, presence: true
 
   has_and_belongs_to_many :cities
-  validates :cities, presence: true
 
   belongs_to :category
   validates :category, presence: true
@@ -18,7 +18,13 @@ class Product < ApplicationRecord
 
   has_many :product_instances
   has_many :taggings
-  has_many :subcategories, through: :taggings
+  has_and_belongs_to_many :subcategories
+
+  after_initialize :init
+
+  def init
+    self.is_topping  ||= false
+  end
 
   def self.all_attributes
     all = []
@@ -35,15 +41,15 @@ class Product < ApplicationRecord
           }
         end
       end
-      if product.image.attached?
-        image_url = ImageUrl.img_url(product.image)
-      end
+      # if product.image.attached?
+      #   image_url = ImageUrl.img_url(product.image)
+      # end
       all << {
         product: product,
         subcategories: product.subcategories,
         category: product.category,
         product_instances: instances,
-        image_url: image_url
+        # image_url: image_url
       }
     end
     return all

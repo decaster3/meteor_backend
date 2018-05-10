@@ -3,5 +3,5 @@ class Subcategory < ApplicationRecord
   
   belongs_to :category
   has_many :taggings
-  has_many :products, through: :taggings
+  has_and_belongs_to_many :products
 end
