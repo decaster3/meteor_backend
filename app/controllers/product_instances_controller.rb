@@ -12,14 +12,14 @@ class ProductInstancesController < ApplicationController
   end
 
   def create
-    @product_instance = ProductInstances.new(product_instance_params)
+    @product_instance = ProductInstance.new(product_instance_params)
     if @product_instance.save
       @product.product_instances << @product_instance
       params[:prices_attributes].each do |price|
-        Price.create!(value: price[:value], city_id: price[:city_id], id: @product_instance.id)
+        Price.create!(value: price[:value], city_id: price[:city_id], product_instance_id: @product_instance.id)
       end
+      json_response @product, :created 
     end
-    json_response @product, :created 
   end
 
   def destroy
@@ -38,7 +38,7 @@ class ProductInstancesController < ApplicationController
   end
 
   def product_instance_params
-    params.require(:product_instance).permit(
+    params.permit(:product_id,
       option_values_attributes: [:value, :option_name_id])
   end
 end

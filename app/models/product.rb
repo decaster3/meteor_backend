@@ -31,9 +31,16 @@ class Product < ApplicationRecord
       instances = []
       product.product_instances.each do |instance|
         ProductOption.where(product_instance_id: instance.id).each do |option|
+          prices = Price.where(product_instance_id: instance.id).map do |price|
+            {
+              value: price.value,
+              currency: City.find(price.city_id).currency
+            }
+          end
           value = OptionValue.find(option.option_value_id)
           name = OptionName.find(value.option_name_id)
           instances << {
+            prices: prices,
             option_name: name.name,
             option_value: value.value
           }

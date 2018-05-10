@@ -1,4 +1,4 @@
-class Prices < ApplicationRecord
+class Price < ApplicationRecord
   validates :value, presence: true
   validates :value, length: { minimum: 2 }
   # validate :check_, :on => :create

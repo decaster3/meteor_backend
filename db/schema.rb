@@ -134,15 +134,6 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
-  create_table "taggings", force: :cascade do |t|
-    t.bigint "product_id"
-    t.bigint "subcategory_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_taggings_on_product_id"
-    t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
-  end
-
   add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
@@ -153,6 +144,4 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
   add_foreign_key "product_options", "product_instances"
   add_foreign_key "products", "categories"
   add_foreign_key "subcategories", "categories"
-  add_foreign_key "taggings", "products"
-  add_foreign_key "taggings", "subcategories"
 end
