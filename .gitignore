@@ -21,10 +21,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Intellij
+# Custom
 .idea/
+.env*
+.DS_Store
 *.iml
 *.iws
-
-# Mac
-.DS_Store
