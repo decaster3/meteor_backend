@@ -1,19 +1,16 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise(
-    :database_authenticatable,
-    :registerable,
-    :recoverable,
-    :rememberable,
-    :trackable,
-    :validatable
-  )
+  # :confirmable, :lockable, :timeoutable, :registerable, :recoverable,
+  # :rememberable, :omniauthable, and :trackable,
+  devise :database_authenticatable,
+         :registerable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
+
+  validates :email, presence: true, uniqueness: true, length: {minimum: 5, maximum: 255}
 
   # attr_accessor :phone, :email
-
-  # Probably not needed since Devise is used
-  # validates :phone, presence: true, length: { minimum: 8, maximum: 255 }
-  # validates :password, presence: true, length: { minimum: 8, maximum: 255 }
-  # has_secure_password
 end
