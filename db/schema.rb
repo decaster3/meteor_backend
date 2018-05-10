@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_09_201310) do
+ActiveRecord::Schema.define(version: 2018_05_10_200859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "Cities_Products", id: false, force: :cascade do |t|
-    t.bigint "Product_id", null: false
-    t.bigint "City_id", null: false
-  end
-
-  create_table "Cities_Toppings", id: false, force: :cascade do |t|
-    t.bigint "City_id", null: false
-    t.bigint "Topping_id", null: false
-  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -58,6 +48,7 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
     t.bigint "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "currency"
     t.index ["country_id"], name: "index_cities_on_country_id"
   end
 
@@ -82,6 +73,7 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.boolean "is_characteristic"
     t.index ["category_id"], name: "index_option_names_on_category_id"
   end
 
@@ -91,6 +83,16 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["option_name_id"], name: "index_option_values_on_option_name_id"
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.string "value"
+    t.bigint "city_id"
+    t.bigint "product_instance_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_prices_on_city_id"
+    t.index ["product_instance_id"], name: "index_prices_on_product_instance_id"
   end
 
   create_table "product_instances", force: :cascade do |t|
@@ -115,7 +117,13 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.boolean "is_topping"
     t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "products_subcategories", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "subcategory_id", null: false
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -135,17 +143,11 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
     t.index ["subcategory_id"], name: "index_taggings_on_subcategory_id"
   end
 
-  create_table "toppings", force: :cascade do |t|
-    t.string "name"
-    t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_toppings_on_category_id"
-  end
-
   add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
+  add_foreign_key "prices", "cities"
+  add_foreign_key "prices", "product_instances"
   add_foreign_key "product_instances", "products"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "product_instances"
@@ -153,5 +155,4 @@ ActiveRecord::Schema.define(version: 2018_05_09_201310) do
   add_foreign_key "subcategories", "categories"
   add_foreign_key "taggings", "products"
   add_foreign_key "taggings", "subcategories"
-  add_foreign_key "toppings", "categories"
 end
