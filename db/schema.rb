@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_09_210811) do
+ActiveRecord::Schema.define(version: 2018_05_10_140343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,15 @@ ActiveRecord::Schema.define(version: 2018_05_09_210811) do
     t.index ["option_name_id"], name: "index_option_values_on_option_name_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "payment_method"
+    t.integer "status"
+    t.bigint "address_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_orders_on_address_id"
+  end
+
   create_table "product_instances", force: :cascade do |t|
     t.bigint "product_id"
     t.datetime "created_at", null: false
@@ -148,6 +157,7 @@ ActiveRecord::Schema.define(version: 2018_05_09_210811) do
   add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
+  add_foreign_key "orders", "addresses"
   add_foreign_key "product_instances", "products"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "product_instances"
