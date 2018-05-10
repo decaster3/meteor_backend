@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :users
+  devise_for :users,
+             controllers: {
+                 sessions: 'users/sessions',
+                 registrations: 'users/registrations'
+             },
+             defaults: {
+                 format: :json
+             }
+
+  # resources :users
 
   # Required by Devise
   root to: 'home#index'
