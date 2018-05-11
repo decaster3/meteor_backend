@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone", default: "", null: false
+    t.integer "role", null: false
     t.string "jti", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
