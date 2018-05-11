@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   end
 
   resources :products do
-    resources :product_instances, :option_names
+    resources :product_instances
+    resources :option_names
   end
 
   resources :categories do

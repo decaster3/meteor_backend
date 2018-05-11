@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   include ImageUrl
   validates :name, :description, presence: true
+  validates :is_topping, exclusion: { in: [nil] }
   validates :name, :description, uniqueness: true
   validates :name, length: {minimum: 2}
   validates :description, length: {minimum: 10}

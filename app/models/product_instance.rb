@@ -1,14 +1,19 @@
 class ProductInstance < ApplicationRecord
+  attr_accessor :prices_attributes
   belongs_to :product
   has_many :product_options
   has_many :option_values, through: :product_options
   has_many :cities, through: :prices
-  accepts_nested_attributes_for :option_values, reject_if: :is_product_instance_category_equal_to_option_value_category
+  has_many :prices
+  accepts_nested_attributes_for :option_values, :reject_if => :is_product_instance_category_equal_to_option_value_category
+  accepts_nested_attributes_for :prices
 
   private
 
   def is_product_instance_category_equal_to_option_value_category(attributes)
-    category_id_of_option_value = OptionName.find(attributes[:option_name_id]).category_id
-    Category.find(category_id_of_option_value).nil?
+    category_id_of_option_value  = OptionName.find(attributes[:option_name_id]).category_id
+    if Category.find(category_id_of_option_value).nil?
+      errors.add(:product_instance, ": option_values is nil")
+    end 
   end
 end
