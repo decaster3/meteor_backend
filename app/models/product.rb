@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   include ImageUrl
   validates :name, :description, presence: true
+  validates :is_topping, exclusion: { in: [nil] }
   validates :name, :description, uniqueness: true
   validates :name, length: { minimum: 2 }
   validates :description, length: { minimum: 10 }
@@ -15,7 +16,6 @@ class Product < ApplicationRecord
   validates :category, presence: true
 
   has_many :product_instances
-  has_many :taggings
   has_and_belongs_to_many :subcategories
 
   after_initialize :init

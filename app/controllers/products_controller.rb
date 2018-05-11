@@ -18,8 +18,6 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      puts "______----_____-----_____-----______"
-      puts @product.inspect
       params[:cities_attributes].each do |city|
         City.find(city[:city_id]).products << @product
       end
