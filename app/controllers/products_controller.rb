@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
     json_response(@products)
   end
 
-  def show 
+  def show
     json_response(@product)
   end
 
@@ -18,15 +18,15 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      puts "______----_____-----_____-----______"
-      puts @product.inspect
       params[:cities_attributes].each do |city|
         City.find(city[:city_id]).products << @product
       end
+
       params[:subcategories_attributes].each do |subcategory|
         Subcategory.find(subcategory[:subcategory_id]).products << @product
       end
-      json_response @product, :created 
+
+      json_response @product, :created
     end
   end
 
@@ -43,6 +43,5 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :category_id, :is_topping)
-    # , :image
   end
 end

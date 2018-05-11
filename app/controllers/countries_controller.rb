@@ -16,7 +16,7 @@ class CountriesController < ApplicationController
   # POST /countries
   def create
     @country = Country.create!(country_params)
-    json_response @country, :created 
+    json_response @country, :created
   end
 
   # PATCH/PUT /countries/1
@@ -34,13 +34,14 @@ class CountriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_country
-      @country = Country.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def country_params
-      params.permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_country
+    @country = Country.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def country_params
+    params.permit(:name)
+  end
 end

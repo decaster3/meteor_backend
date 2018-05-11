@@ -7,7 +7,7 @@ class CitiesController < ApplicationController
     json_response(@cities)
   end
 
-  def show 
+  def show
     json_response(@city)
   end
 
@@ -18,7 +18,7 @@ class CitiesController < ApplicationController
 
   def create
     @country.cities.create!(city_params)
-    json_response @country, :created 
+    json_response @country, :created
   end
 
   def destroy

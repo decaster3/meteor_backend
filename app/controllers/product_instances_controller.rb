@@ -7,7 +7,7 @@ class ProductInstancesController < ApplicationController
     json_response(@product_instances)
   end
 
-  def show 
+  def show
     json_response(@product_instance)
   end
 
@@ -18,7 +18,7 @@ class ProductInstancesController < ApplicationController
       params[:prices_attributes].each do |price|
         Price.create!(value: price[:value], city_id: price[:city_id], product_instance_id: @product_instance.id)
       end
-      json_response @product, :created 
+      json_response @product, :created
     end
   end
 

@@ -7,7 +7,7 @@ class ToppingsController < ApplicationController
     json_response(@toppings)
   end
 
-  def show 
+  def show
     json_response(@topping)
   end
 
@@ -24,7 +24,7 @@ class ToppingsController < ApplicationController
         City.find(city[:city_id]).toppings << @category
       end
     end
-    json_response @category, :created 
+    json_response @category, :created
   end
 
   def destroy

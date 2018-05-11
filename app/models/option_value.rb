@@ -1,6 +1,6 @@
 class OptionValue < ApplicationRecord
   validates :value, presence: true
-  validates :value, length: { minimum: 1 }
+  validates :value, length: {minimum: 1}
 
   belongs_to :option_name
   has_many :product_instances
