@@ -46,9 +46,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Custom
-gem 'file_validators'
 gem 'devise'
 gem 'devise-jwt'
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'file_validators'
 gem 'rspec', groups: [:development, :test]
 gem 'rspec-rails', groups: [:development, :test]
-gem 'dotenv-rails', groups: [:development, :test]
