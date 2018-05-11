@@ -4,27 +4,24 @@ Rails.application.routes.draw do
   end
 
   resources :products do
-    resources :product_instances do
-      resources :option_values
-    end
-    resources :option_names
+    resources :product_instances, :option_names
   end
 
   resources :categories do
     resources :subcategories
-    resources :toppings
   end
 
+  resources :users
+  
   devise_for :users,
+             path: 'auth',
              controllers: {
-                 sessions: 'users/sessions',
-                 registrations: 'users/registrations'
+               sessions: 'users/sessions',
+               registrations: 'users/registrations'
              },
              defaults: {
-                 format: :json
+               format: :json
              }
-
-  # resources :users
 
   # Required by Devise
   root to: 'home#index'
