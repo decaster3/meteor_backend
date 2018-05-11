@@ -15,6 +15,8 @@ class Product < ApplicationRecord
   belongs_to :category
   validates :category, presence: true
 
+
+
   has_many :product_instances
   has_and_belongs_to_many :subcategories
 

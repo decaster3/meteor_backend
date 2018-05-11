@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "addresses", force: :cascade do |t|
+    t.string "street"
+    t.string "building"
+    t.string "apartment"
+    t.string "comment"
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_addresses_on_city_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -83,6 +94,25 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["option_name_id"], name: "index_option_values_on_option_name_id"
+  end
+
+  create_table "order_products", force: :cascade do |t|
+    t.integer "quantity"
+    t.bigint "product_instance_id"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_products_on_order_id"
+    t.index ["product_instance_id"], name: "index_order_products_on_product_instance_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "payment_method"
+    t.integer "status"
+    t.bigint "address_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_orders_on_address_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -147,9 +177,13 @@ ActiveRecord::Schema.define(version: 2018_05_10_200859) do
     t.index ["phone"], name: "index_users_on_phone", unique: true
   end
 
+  add_foreign_key "addresses", "cities"
   add_foreign_key "cities", "countries"
   add_foreign_key "option_names", "categories"
   add_foreign_key "option_values", "option_names"
+  add_foreign_key "order_products", "orders"
+  add_foreign_key "order_products", "product_instances"
+  add_foreign_key "orders", "addresses"
   add_foreign_key "prices", "cities"
   add_foreign_key "prices", "product_instances"
   add_foreign_key "product_instances", "products"

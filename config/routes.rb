@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :order_products
+  resources :orders
+  resources :addresses
+
   resources :countries do
     resources :cities
   end

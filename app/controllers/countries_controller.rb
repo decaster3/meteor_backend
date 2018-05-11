@@ -4,7 +4,6 @@ class CountriesController < ApplicationController
   # GET /countries
   def index
     @countries = Country.all
-
     render json: @countries
   end
 
@@ -21,11 +20,8 @@ class CountriesController < ApplicationController
 
   # PATCH/PUT /countries/1
   def update
-    if @country.update(country_params)
-      render json: @country
-    else
-      render json: @country.errors, status: :unprocessable_entity
-    end
+    @country.update(country_params)
+    render json: @country
   end
 
   # DELETE /countries/1
