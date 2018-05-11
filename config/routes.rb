@@ -16,17 +16,9 @@ Rails.application.routes.draw do
     resources :subcategories
   end
 
-  resources :users
+  resources :users, only: [:index, :show]
 
-  devise_for :users,
-             path: 'auth',
-             controllers: {
-               sessions: 'users/sessions',
-               registrations: 'users/registrations'
-             },
-             defaults: {
-               format: :json
-             }
+  devise_for :users, path: 'auth', defaults: {format: :json}
 
   # Required by Devise
   root to: 'home#index'
