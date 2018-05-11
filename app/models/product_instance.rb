@@ -11,8 +11,11 @@ class ProductInstance < ApplicationRecord
 
   private
 
+  #TODO improve this method
   def is_product_instance_category_equal_to_option_value_category(attributes)
-    category_id_of_option_value = OptionName.find(attributes[:option_name_id]).category_id
-    Category.find(category_id_of_option_value).nil?
+    category_id_of_option_value  = OptionName.find(attributes[:option_name_id]).category_id
+    if Category.find(category_id_of_option_value).nil?
+      errors.add(:product_instance, ": option_values is nil")
+    end
   end
 end

@@ -1,13 +1,12 @@
 product1 = Product.create({
-  name: 'Margarita', 
+  name: 'Margarita',
   description: 'Awesome pizza'
 })
 
-productInstance1 = ProductInstance.create({
+product_instance1 = ProductInstance.create({
   product_id: product1.id
 })
-# })
-###############
+##############
 option1 = OptionName.create({
   name: 'Size'
 })
@@ -21,80 +20,80 @@ option4 = OptionName.create({
   name: 'Weight'
 })
 ##############
-sizeOption1 = OptionValue.create({
+size_option1 = OptionValue.create({
   option_name_id: option1.id,
   value: '32'
 })
-sizeOption2 = OptionValue.create({
+size_option2 = OptionValue.create({
   option_name_id: option1.id,
   value: '42'
 })
-sizeOption2 = OptionValue.create({
+size_option2 = OptionValue.create({
   option_name_id: option2.id,
   value: '52'
 })
-# ###############
-testoOption1 = OptionValue.create({
+##############
+dough_option1 = OptionValue.create({
   option_name_id: option2.id,
   value: 'slim'
 })
-testoOption2 = OptionValue.create({
+dough_option2 = OptionValue.create({
   option_name_id: option2.id,
   value: 'tasty'
 })
-################
-costOption1 = OptionValue.create({
+##############
+cost_option1 = OptionValue.create({
   option_name_id: option3.id,
   value: '140'
 })
-costOption3 = OptionValue.create({
+cost_option3 = OptionValue.create({
   option_name_id: option3.id,
   value: '240'
 })
-costOption4 = OptionValue.create({
+cost_option4 = OptionValue.create({
   option_name_id: option3.id,
   value: '540'
 })
-###############
-weightOption1 = OptionValue.create({
+##############
+weight_option1 = OptionValue.create({
   option_name_id: option4.id,
   value: '1'
 })
-weightOption2 = OptionValue.create({
+weight_option2 = OptionValue.create({
   option_name_id: option4.id,
   value: '2'
 })
-weightOption3 = OptionValue.create({
+weight_option3 = OptionValue.create({
   option_name_id: option4.id,
   value: '3'
 })
-weightOption4 = OptionValue.create({
+weight_option4 = OptionValue.create({
   option_name_id: option4.id,
   value: '4'
 })
-weightOption5 = OptionValue.create({
+weight_option5 = OptionValue.create({
   option_name_id: option4.id,
   value: '5'
 })
-weightOption6 = OptionValue.create({
+weight_option6 = OptionValue.create({
   option_name_id: option4.id,
   value: '6'
 })
-######################
+##############
 ProductOption.create({
-  product_instance_id: productInstance1.id,
-  option_value_id: sizeOption1.id,
+  product_instance_id: product_instance1.id,
+  option_value_id: size_option1.id,
 })
 ProductOption.create({
-  product_instance_id: productInstance1.id,
-  option_value_id: testoOption1.id,
+  product_instance_id: product_instance1.id,
+  option_value_id: dough_option1.id,
 })
 ProductOption.create({
-  product_instance_id: productInstance1.id,
-  option_value_id: costOption1.id,
+  product_instance_id: product_instance1.id,
+  option_value_id: cost_option1.id,
 })
 ProductOption.create({
-  product_instance_id: productInstance1.id,
-  option_value_id: weightOption1.id,
+  product_instance_id: product_instance1.id,
+  option_value_id: weight_option1.id,
 })
-#####################
+##############

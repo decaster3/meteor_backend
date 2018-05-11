@@ -7,7 +7,7 @@ class SubcategoriesController < ApplicationController
     json_response(@subcategories)
   end
 
-  def show 
+  def show
     json_response(@subcategory)
   end
 
@@ -18,7 +18,7 @@ class SubcategoriesController < ApplicationController
 
   def create
     @category.subcategories.create!(subcategory_params)
-    json_response @category, :created 
+    json_response @category, :created
   end
 
   def destroy

@@ -1,5 +1,5 @@
 class OptionNamesController < ApplicationController
-  
+
   def index
     @option_names = OptionName.all
     json_response(@option_names)
