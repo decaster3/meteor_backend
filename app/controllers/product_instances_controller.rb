@@ -1,6 +1,6 @@
 class ProductInstancesController < ApplicationController
   before_action :set_product
-  before_action :set_product_instance, only: [:update, :destroy, :show]
+  before_action :set_product_instance, only: [ :destroy, :show ]
 
   def index
     @product_instances = ProductInstance.all
@@ -12,14 +12,8 @@ class ProductInstancesController < ApplicationController
   end
 
   def create
-    @product_instance = ProductInstances.new(product_instance_params)
-    if @product_instance.save
-      @product.product_instances << @product_instance
-      params[:prices_attributes].each do |price|
-        Price.create!(value: price[:value], city_id: price[:city_id], id: @product_instance.id)
-      end
-    end
-    json_response @product, :created 
+    @product_instance = @product.product_instances.create(product_instance_params)
+    json_response @product_instance, :created
   end
 
   def destroy
@@ -39,6 +33,7 @@ class ProductInstancesController < ApplicationController
 
   def product_instance_params
     params.require(:product_instance).permit(
-      option_values_attributes: [:value, :option_name_id])
+      option_values_attributes: [:value, :option_name_id],
+      prices_attributes: [:value, :city_id])
   end
 end
