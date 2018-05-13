@@ -5,6 +5,9 @@ class User < ApplicationRecord
 
   enum role: %i[client admin]
 
+  has_many :orders
+
+
   after_initialize :set_default_role, if: :new_record?
 
   MIN_EMAIL_LENGTH = 5

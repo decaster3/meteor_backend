@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:update, :destroy, :show]
+  before_action :set_product, only: %i[update destroy show]
+  before_action :admin_only, only: %i[create update destroy]
 
   def index
     @products = Product.all_attributes
