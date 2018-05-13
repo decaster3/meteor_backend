@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     render json: @user
   end
 
-  # # POST /users
+  # POST /users
   # def create
   #   @user = User.new(user_params)
   #
@@ -52,11 +52,5 @@ class UsersController < ApplicationController
     params
       .require(:user)
       .permit(:phone, :email)
-  end
-
-  def admin_only
-    unless current_user.admin?
-      redirect_to root_path, :alert => "Access denied."
-    end
   end
 end

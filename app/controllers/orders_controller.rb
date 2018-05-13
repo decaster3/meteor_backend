@@ -17,17 +17,18 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.create!(order_params)
+    unless params[:address].nil?
+      address = Address.create!(address_params)
+      params[:order][:address_id] = address.id
+    end
+    order_params_instance = order_params
+    @order = Order.create!(order_params_instance)
     json_response @order, :created
   end
 
   # PATCH/PUT /orders/1
   def update
-    if @order.update(order_params)
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
-    end
+    render json: @order if @order.update(order_params)
   end
 
   # DELETE /orders/1
@@ -48,7 +49,12 @@ class OrdersController < ApplicationController
       :payment_method,
       :status,
       :address_id,
-      order_products_attributes: %i[quantity product_instance_id],
+      order_products_attributes: %i[quantity product_instance_id]
     )
+  end
+
+  def address_params
+    params.require(:address)
+          .permit(:street, :building, :apartment, :comment, :city_id)
   end
 end
