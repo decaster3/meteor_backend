@@ -1,4 +1,4 @@
 class Address < ApplicationRecord
   belongs_to :city
-  belongs_to :order
+  has_many :orders
 end

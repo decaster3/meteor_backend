@@ -15,13 +15,8 @@ class AddressesController < ApplicationController
 
   # POST /addresses
   def create
-    @address = Address.new(address_params)
-
-    if @address.save
-      render json: @address, status: :created, location: @address
-    else
-      render json: @address.errors, status: :unprocessable_entity
-    end
+    @address = Address.create!(address_params)
+    render json: @address, status: :created
   end
 
   # PATCH/PUT /addresses/1

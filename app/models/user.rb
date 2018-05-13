@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
-  enum role: [:client, :admin]
+  enum role: %i[client admin]
 
   after_initialize :set_default_role, if: :new_record?
 
@@ -24,12 +24,12 @@ class User < ApplicationRecord
   validates :email,
             presence: true,
             uniqueness: true,
-            length: {minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH}
+            length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
   validates :phone,
             presence: true,
             uniqueness: true,
-            length: {minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH}
+            length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
 
