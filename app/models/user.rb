@@ -24,15 +24,15 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: self
 
-  validates :email,
-            presence: true,
-            uniqueness: true,
-            length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
+  # validates :email,
+  #           presence: true,
+  #           uniqueness: true,
+  #           length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
-  validates :phone,
-            presence: true,
-            uniqueness: true,
-            length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
+  # validates :phone,
+  #           presence: true,
+  #           uniqueness: true,
+  #           length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
 
