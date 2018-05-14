@@ -75,11 +75,11 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
-production:
-  <<: *default
-  database: meteor_backend_production
-  username: meteor_backend
-  password: <%= ENV['METEOR_BACKEND_DATABASE_PASSWORD'] %>
+ production:
+   url: <%= ENV['DATABASE_URL'] %>
+
+#production:
+#  <<: *default
+#  database: meteor_backend_production
+#  username: meteor_backend
+#  password: <%= ENV['METEOR_BACKEND_DATABASE_PASSWORD'] %>
