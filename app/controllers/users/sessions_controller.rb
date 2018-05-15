@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::SessionsController < Devise::SessionsController
   include Response
   include ExceptionHandler
@@ -11,9 +13,13 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message!(:notice, :signed_in)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    render json: { email: resource.email, phone: resource.phone, id: resource.id, role: resource.role }
+  end
 
   # DELETE /resource/sign_out
   # def destroy
