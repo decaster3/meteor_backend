@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 class City < ApplicationRecord
+  enum currency: %i[RUB KGS KZT]
+
   belongs_to :country
   has_and_belongs_to_many :products
   has_many :product_instances, through: :prices
