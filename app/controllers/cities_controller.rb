@@ -19,8 +19,12 @@ class CitiesController < ApplicationController
   end
 
   def create
-    city = City.create!(city_params)
-    json_response city, :created
+    city = City.new(city_params)
+    if city.save
+      json_response city, :created
+    else
+      json_response city
+    end
   end
 
   def destroy
@@ -32,13 +36,13 @@ class CitiesController < ApplicationController
 
   def city_params
     params.require(:city)
-          .permit(
+        .permit(
             :name,
             :currency,
             :country_id,
             :phone,
             schedule: %i[opens_at closes_at]
-          )
+        )
   end
 
   def set_country
