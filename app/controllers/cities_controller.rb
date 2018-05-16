@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class CitiesController < ApplicationController
-  before_action :set_country
-  before_action :set_city, only: [:update, :destroy, :show]
+  # before_action :set_country
+  before_action :set_city, only: %i[update destroy show]
 
   def index
     @cities = City.all
     json_response(@cities)
   end
 
-  def show 
+  def show
     json_response(@city)
   end
 
@@ -39,5 +41,4 @@ class CitiesController < ApplicationController
   def set_city
     @city = @country.cities.find_by(id: params[:id]) if @country
   end
-
 end

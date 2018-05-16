@@ -53,5 +53,6 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'file_validators'
+gem "olive_branch"
 gem 'rspec', groups: [:development, :test]
 gem 'rspec-rails', groups: [:development, :test]

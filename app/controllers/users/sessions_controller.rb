@@ -18,13 +18,13 @@ class Users::SessionsController < Devise::SessionsController
     set_flash_message!(:notice, :signed_in)
     sign_in(resource_name, resource)
     yield resource if block_given?
-    render json: { email: resource.email, phone: resource.phone, id: resource.id, role: resource.role }
+    render json: {email: resource.email, phone: resource.phone, id: resource.id, role: resource.role}
   end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
 
   # protected
 
@@ -32,4 +32,16 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  private
+
+  def respond_to_on_destroy
+    # We actually need to hardcode this as Rails default responder doesn't
+    # support returning empty response on GET request
+    respond_with do |format|
+      format.all {head :no_content}
+      format.any(*navigational_formats) {redirect_to after_sign_out_path_for(resource_name)}
+    end
+  end
+
 end

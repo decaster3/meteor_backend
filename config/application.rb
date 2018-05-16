@@ -24,10 +24,13 @@ module MeteorBackend
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    #
+    config.middleware.use OliveBranch::Middleware
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: %i[get post options]
+        resource '*', headers: :any, methods: %i[get post put options delete]
       end
     end
 
