@@ -31,7 +31,7 @@ class CitiesController < ApplicationController
   private
 
   def city_params
-    params.permit(:name, :currency, :schedule)
+    params.require(:city).permit(:name, :currency, :schedule, :country_id)
   end
 
   def set_country
