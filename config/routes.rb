@@ -6,7 +6,6 @@ Rails.application.routes.draw do
 
   resources :products do
     resources :product_instances
-    resources :option_names
   end
 
   resources :categories do

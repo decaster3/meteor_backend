@@ -58,7 +58,7 @@ class Product < ApplicationRecord
         product: product,
         subcategories: product.subcategories,
         category: product.category,
-        product_instances: instances,
+        product_instances: ProductInstance.find_all_by_product(product),
         # image_url: image_url
       }
     end

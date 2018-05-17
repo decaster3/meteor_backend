@@ -17,4 +17,17 @@ class ProductInstance < ApplicationRecord
   #   errors.add(:product_instance, ': option_values is nil') if
   #       Category.find(category_id_of_option_value).nil?
   # end
+
+  def self.find_all_by_product(product)
+    all = ProductInstance.where(product_id: product.id)
+    pis = []
+    all.map do |pi|
+      pis << {
+          product_instance: pi,
+          options: ProductOption.find_all_by_product_instance(pi)
+      }
+    end
+    return pis
+  end
+
 end
