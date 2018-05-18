@@ -2,10 +2,11 @@
 
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[update destroy show]
-  before_action :admin_only, only: %i[create update destroy]
+  # before_action :admin_only, only: %i[create update destroy]
 
   def index
-    @products = Product.all_attributes
+    city = City.find(params[:city_id])
+    @products = Product.all_attributes(city, params[:category_id])
     json_response(@products)
   end
 

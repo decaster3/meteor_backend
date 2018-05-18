@@ -26,29 +26,12 @@ class Product < ApplicationRecord
     self.is_topping ||= false
   end
 
-  def self.all_attributes
+  def self.all_attributes(city, category_id)
     all = []
-    products = Product.all
+    products = city.products
+                   .select(:id, :name, :description, :category_id, :is_topping)
+                   .where(category_id: category_id)
     products.each do |product|
-      instances = []
-      product.product_instances.each do |instance|
-        ProductOption.where(product_instance_id: instance.id).each do |option|
-          prices = Price.where(product_instance_id: instance.id).map do |price|
-            {
-              value: price.value,
-              currency: City.find(price.city_id).currency
-            }
-          end
-
-          value = OptionValue.find(option.option_value_id)
-          name = OptionName.find(value.option_name_id)
-          instances << {
-            prices: prices,
-            option_name: name.name,
-            option_value: value.value
-          }
-        end
-      end
 
       # if product.image.attached?
       #   image_url = ImageUrl.img_url(product.image)
@@ -57,8 +40,12 @@ class Product < ApplicationRecord
       all << {
         product: product,
         subcategories: product.subcategories,
-        category: product.category,
-        product_instances: ProductInstance.find_all_by_product(product),
+        category: {
+            id: product.category.id,
+            name: product.category.name
+        },
+        product_instances: ProductInstance.find_all_by_product(product, city),
+        options: OptionName.find_all_by_category_id(category_id)
         # image_url: image_url
       }
     end

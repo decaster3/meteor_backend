@@ -18,13 +18,19 @@ class ProductInstance < ApplicationRecord
   #       Category.find(category_id_of_option_value).nil?
   # end
 
-  def self.find_all_by_product(product)
+  def self.find_all_by_product(product, city)
     all = ProductInstance.where(product_id: product.id)
     pis = []
     all.map do |pi|
       pis << {
-          product_instance: pi,
-          options: ProductOption.find_all_by_product_instance(pi)
+          id: pi.id,
+          options: ProductOption.find_all_by_product_instance(pi),
+          prices: pi.prices.where(city_id: city.id).map do |price|
+            {
+                value: price.value,
+                currency: city.currency
+            }
+          end
       }
     end
     return pis
