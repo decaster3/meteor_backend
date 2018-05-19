@@ -57,3 +57,4 @@ gem 'file_validators'
 gem "olive_branch"
 gem 'rspec', groups: [:development, :test]
 gem 'rspec-rails', groups: [:development, :test]
+gem 'seed_dump'
