@@ -26,7 +26,8 @@ class ProductInstance < ApplicationRecord
       next if price.nil?
       pis << {
         id: pi.id,
-        options: ProductOption.find_all_by_product_instance(pi),
+        belongig_options: ProductOption.find_all_belonging_by_product_instance(pi),
+        not_belongig_options: ProductOption.find_all_not_belonging_by_product_instance(pi),
         price: {
           value: price.value,
           currency: city.currency
