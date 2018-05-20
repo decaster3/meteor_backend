@@ -44,7 +44,8 @@ class Product < ApplicationRecord
         description: product.description,
         subcategories: product.subcategories,
         instances: ProductInstance.find_all_by_product(product, city),
-        options: OptionName.find_all_by_category_id(category_id)
+        belonging_options: OptionName.find_all_belonging_by_category_id(category_id),
+        not_belonging_options: OptionName.find_all_not_belonging_by_category_id(category_id)
         # image_url: image_url
       }
     end
