@@ -11,15 +11,16 @@ class OptionValue < ApplicationRecord
   def self.find_all_by_product_option(product_option)
     ov = product_option.option_value
     {
-      option_value: ov.value,
-      option_name: ov.option_name.name
+      value_id: ov.id,
+      option_id: ov.option_name_id
     }
   end
 
   def self.find_all_distinct_by_option_name(on)
-    on.option_values.select(:value).distinct.map do |ov|
+    on.option_values.select(:id, :value).map do |ov|
       {
-        value: ov.value
+        value: ov.value,
+        id: ov.id
       }
     end
   end

@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class OptionName < ApplicationRecord
   validates :name, presence: true
-  validates :name, length: {minimum: 2}
+  validates :is_belongs, exclusion: { in: [nil] }
+  validates :name, length: { minimum: 2 }
 
   has_many :option_values
   belongs_to :category
@@ -11,11 +14,12 @@ class OptionName < ApplicationRecord
     all.map do |on|
       # ovs = OptionValue.select(:value).where(option_name_id: on.id)
       result << {
-          id: on.id,
-          name: on.name,
-          option_values: OptionValue.find_all_distinct_by_option_name(on)
+        id: on.id,
+        name: on.name,
+        is_belongs: on.is_belongs,
+        option_values: OptionValue.find_all_distinct_by_option_name(on)
       }
     end
-    return result
+    result
   end
 end
