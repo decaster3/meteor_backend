@@ -54,7 +54,7 @@ gem 'file_validators'
 # required for translating from snake_case to camelCase and back
 gem 'olive_branch'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors', require: 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
 # gem 'seed_dump'
