@@ -9,8 +9,9 @@ class OptionName < ApplicationRecord
     result = []
     all = OptionName.where(category_id: category_id)
     all.map do |on|
-      ovs = OptionValue.select(:value).where(option_name_id: on.id)
+      # ovs = OptionValue.select(:value).where(option_name_id: on.id)
       result << {
+          id: on.id,
           name: on.name,
           option_values: OptionValue.find_all_distinct_by_option_name(on)
       }

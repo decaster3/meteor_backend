@@ -22,18 +22,17 @@ class ProductInstance < ApplicationRecord
     all = ProductInstance.where(product_id: product.id)
     pis = []
     all.map do |pi|
+      price = Price.find_by(city_id: city.id, product_instance_id: pi.id)
+      next if price.nil?
       pis << {
-          id: pi.id,
-          options: ProductOption.find_all_by_product_instance(pi),
-          prices: pi.prices.where(city_id: city.id).map do |price|
-            {
-                value: price.value,
-                currency: city.currency
-            }
-          end
+        id: pi.id,
+        options: ProductOption.find_all_by_product_instance(pi),
+        price: {
+          value: price.value,
+          currency: city.currency
+        }
       }
     end
-    return pis
+    pis
   end
-
 end

@@ -19,7 +19,7 @@ class OptionValue < ApplicationRecord
   def self.find_all_distinct_by_option_name(on)
     on.option_values.select(:value).distinct.map do |ov|
       {
-          value: ov.value
+        value: ov.value
       }
     end
   end
