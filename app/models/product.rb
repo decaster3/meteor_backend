@@ -38,13 +38,12 @@ class Product < ApplicationRecord
       # end
 
       all << {
-        product: product,
         name: product.name,
         id: product.id,
         description: product.description,
         subcategories: product.subcategories,
         instances: ProductInstance.find_all_by_product(product, city),
-        options: OptionName.find_by_category_id(category_id)
+        options: OptionName.find_all_by_category_id(category_id)
         # image_url: image_url
       }
     end

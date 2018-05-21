@@ -8,9 +8,9 @@ class OptionName < ApplicationRecord
   has_many :option_values
   belongs_to :category
 
-  def self.find_all_by_category_id(category_id, belongs)
+  def self.find_all_by_category_id(category_id)
     result = []
-    all = OptionName.where(category_id: category_id, is_belongs: belongs)
+    all = OptionName.where(category_id: category_id)
     all.map do |on|
       # ovs = OptionValue.select(:value).where(option_name_id: on.id)
       result << {
@@ -21,13 +21,5 @@ class OptionName < ApplicationRecord
       }
     end
     result
-  end
-
-  def self.find_all_belonging_by_category_id(category_id)
-    find_all_by_category_id(category_id, true)
-  end
-
-  def self.find_all_not_belonging_by_category_id(category_id)
-    find_all_by_category_id(category_id, false)
   end
 end

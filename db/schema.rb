@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_20_110241) do
+ActiveRecord::Schema.define(version: 2018_05_21_210315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2018_05_20_110241) do
     t.bigint "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "currency"
+    t.integer "currency"
     t.string "phone"
     t.index ["country_id"], name: "index_cities_on_country_id"
   end
@@ -181,19 +181,19 @@ ActiveRecord::Schema.define(version: 2018_05_20_110241) do
     t.index ["phone"], name: "index_users_on_phone", unique: true
   end
 
-  add_foreign_key "addresses", "cities"
-  add_foreign_key "cities", "countries"
-  add_foreign_key "option_names", "categories"
-  add_foreign_key "option_values", "option_names"
-  add_foreign_key "order_products", "orders"
-  add_foreign_key "order_products", "product_instances"
-  add_foreign_key "orders", "addresses"
-  add_foreign_key "orders", "users"
-  add_foreign_key "prices", "cities"
-  add_foreign_key "prices", "product_instances"
-  add_foreign_key "product_instances", "products"
-  add_foreign_key "product_options", "option_values"
-  add_foreign_key "product_options", "product_instances"
-  add_foreign_key "products", "categories"
-  add_foreign_key "subcategories", "categories"
+  add_foreign_key "addresses", "cities", on_delete: :nullify
+  add_foreign_key "cities", "countries", on_delete: :cascade
+  add_foreign_key "option_names", "categories", on_delete: :cascade
+  add_foreign_key "option_values", "option_names", on_delete: :cascade
+  add_foreign_key "order_products", "orders", on_delete: :cascade
+  add_foreign_key "order_products", "product_instances", on_delete: :cascade
+  add_foreign_key "orders", "addresses", on_delete: :nullify
+  add_foreign_key "orders", "users", on_delete: :cascade
+  add_foreign_key "prices", "cities", on_delete: :nullify
+  add_foreign_key "prices", "product_instances", on_delete: :cascade
+  add_foreign_key "product_instances", "products", on_delete: :cascade
+  add_foreign_key "product_options", "option_values", on_delete: :cascade
+  add_foreign_key "product_options", "product_instances", on_delete: :cascade
+  add_foreign_key "products", "categories", on_delete: :cascade
+  add_foreign_key "subcategories", "categories", on_delete: :cascade
 end

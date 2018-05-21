@@ -2,10 +2,10 @@
 
 class ProductInstance < ApplicationRecord
   belongs_to :product
-  has_many :product_options
-  has_many :option_values, through: :product_options
+  has_many :product_options, dependent: :destroy
+  has_many :option_values, through: :product_options, dependent: :destroy
   has_many :cities, through: :prices
-  has_many :prices
+  has_many :prices, dependent: :delete_all
   accepts_nested_attributes_for :option_values
   accepts_nested_attributes_for :prices
 
@@ -26,8 +26,8 @@ class ProductInstance < ApplicationRecord
       next if price.nil?
       pis << {
         id: pi.id,
-        belongig_options: ProductOption.find_all_belonging_by_product_instance(pi),
-        not_belongig_options: ProductOption.find_all_not_belonging_by_product_instance(pi),
+        belonging_options: ProductOption.find_all_belonging_by_product_instance(pi),
+        not_belonging_options: ProductOption.find_all_not_belonging_by_product_instance(pi),
         price: {
           value: price.value,
           currency: city.currency
