@@ -57,4 +57,4 @@ gem 'olive_branch'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
-# gem 'seed_dump'
+gem 'seed_dump'

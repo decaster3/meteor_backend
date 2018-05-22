@@ -21,6 +21,9 @@ class User < ApplicationRecord
   # :rememberable, :omniauthable, and :trackable,
   devise :database_authenticatable,
          :registerable,
+         :confirmable,
+         :recoverable,
+         :trackable,
          :jwt_authenticatable,
          jwt_revocation_strategy: self
 
