@@ -6,6 +6,8 @@ class User < ApplicationRecord
   enum role: %i[client admin]
 
   has_many :orders
+  belongs_to :inviter, class_name: 'User', optional: true
+  has_many :referals, class_name: 'User', foreign_key: 'inviter'
 
 
   after_initialize :set_default_role, if: :new_record?
@@ -21,16 +23,15 @@ class User < ApplicationRecord
   # :rememberable, :omniauthable, and :trackable,
   devise :database_authenticatable,
          :registerable,
-         :confirmable,
-         :recoverable,
+         # :confirmable,
+         # :recoverable,
          :trackable,
          :jwt_authenticatable,
          jwt_revocation_strategy: self
 
-  validates :email,
-            presence: true,
-            uniqueness: true,
-            length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
+  # validates :email,
+            # uniqueness: true,
+            # length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
   validates :phone,
             presence: true,
@@ -38,6 +39,8 @@ class User < ApplicationRecord
             length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
+  # attr_accessor :inviter
+  # attr_accessible :inviter
 
   private
 

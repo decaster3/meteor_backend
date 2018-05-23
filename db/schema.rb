@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_20_110241) do
+ActiveRecord::Schema.define(version: 2018_05_22_135815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,12 @@ ActiveRecord::Schema.define(version: 2018_05_20_110241) do
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
+  create_table "tests", force: :cascade do |t|
+    t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -187,8 +193,10 @@ ActiveRecord::Schema.define(version: 2018_05_20_110241) do
     t.string "phone", default: "", null: false
     t.integer "role", null: false
     t.string "jti", null: false
+    t.bigint "inviter_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["inviter_id"], name: "index_users_on_inviter_id"
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["phone"], name: "index_users_on_phone", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
