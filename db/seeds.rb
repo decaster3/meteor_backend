@@ -52,6 +52,7 @@ OptionValue.create!([
                       { value: '685 g', option_name_id: 3 }
                     ])
 City.find(1).products << Product.find(1)
+City.find(1).products << Product.find(2)
 Price.create!([
                 { value: '255', city_id: 1, product_instance_id: 1 },
                 { value: '200', city_id: 1, product_instance_id: 2 },
@@ -59,12 +60,12 @@ Price.create!([
                 { value: '188', city_id: 1, product_instance_id: 4 },
                 { value: '200', city_id: 1, product_instance_id: 5 },
                 { value: '255', city_id: 1, product_instance_id: 6 },
-                { value: '285', city_id: 1, product_instance_id: 1 },
-                { value: '230', city_id: 1, product_instance_id: 2 },
-                { value: '218', city_id: 1, product_instance_id: 3 },
-                { value: '218', city_id: 1, product_instance_id: 4 },
-                { value: '230', city_id: 1, product_instance_id: 5 },
-                { value: '285', city_id: 1, product_instance_id: 6 }
+                { value: '285', city_id: 1, product_instance_id: 7 },
+                { value: '230', city_id: 1, product_instance_id: 8 },
+                { value: '218', city_id: 1, product_instance_id: 9 },
+                { value: '218', city_id: 1, product_instance_id: 10 },
+                { value: '230', city_id: 1, product_instance_id: 11 },
+                { value: '285', city_id: 1, product_instance_id: 12 }
               ])
 ProductOption.create!([
                         { product_instance_id: 1, option_value_id: 3 },

@@ -43,9 +43,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
 
     # Commented out on 2018-05-09 untill basic JWT auth is working
-    add_index :users, :reset_password_token, unique: true
+    # add_index :users, :reset_password_token, unique: true
 
-    add_index :users, :confirmation_token,   unique: true
+    # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end
 end
