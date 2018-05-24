@@ -9,8 +9,8 @@ class User < ApplicationRecord
   belongs_to :inviter, class_name: 'User', optional: true
   has_many :referals, class_name: 'User', foreign_key: 'inviter'
 
-
   after_initialize :set_default_role, if: :new_record?
+  after_initialize :send_code
 
   MIN_EMAIL_LENGTH = 5
   MAX_EMAIL_LENGTH = 255
@@ -30,8 +30,8 @@ class User < ApplicationRecord
          jwt_revocation_strategy: self
 
   # validates :email,
-            # uniqueness: true,
-            # length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
+  # uniqueness: true,
+  # length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
   validates :phone,
             presence: true,
@@ -42,9 +42,20 @@ class User < ApplicationRecord
   # attr_accessor :inviter
   # attr_accessible :inviter
 
+  def verified?
+    !self.verified_at.nil?
+  end
+
   private
 
   def set_default_role
     self.role ||= :client
+  end
+
+  def send_code
+    SmsValidation.create!(
+      phone: self.phone,
+      expires_at: Time.now + 1.day
+    )
   end
 end

@@ -6,6 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       ## Database authenticatable
       t.string :email, null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.timestamp :verified_at
 
       # Commented out on 2018-05-09 untill basic JWT auth is working
       # ## Recoverable

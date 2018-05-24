@@ -7,7 +7,11 @@ City.create!([
                { name: 'Osaka', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '58000000000' }
              ])
 Category.create!([
-                   { name: 'Pizza' }
+                   { name: 'Пицца' },
+                   { name: 'Бургеры' },
+                   { name: 'Суши' },
+                   { name: 'Закуски' },
+                   { name: 'Напитки' }
                  ])
 OptionName.create!([
                      { name: 'size', category_id: 1, is_characteristic: nil, is_belongs: false },
