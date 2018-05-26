@@ -6,6 +6,8 @@ class CitiesController < ApplicationController
 
   def index
     @cities = City.all
+    # user = User.last
+    # user.
     json_response(@cities)
   end
 

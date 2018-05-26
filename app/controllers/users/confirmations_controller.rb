@@ -1,30 +1,32 @@
 # frozen_string_literal: true
 
-class Users::ConfirmationsController < Devise::ConfirmationsController
-  # GET /resource/confirmation/new
-  # def new
-  #   super
-  # end
+class ConfirmationsController < ApplicationController
+  before_action :authenticate_user!, only: :show
 
-  # POST /resource/confirmation
-  # def create
-  #   super
-  # end
+  def show
+    if current_user.confirm? confirmation_params
+      current_user.confirm
+      if current_user.nil?
+        render json: {
+          error: 'User not found'
+        }, status: 410
+      else
+        render json: {
+          name: current_user.name,
+          phone: current_user.phone,
+          id: current_user.id,
+          role: current_user.role,
+          token: current_user.token
+        }
+      end
+    else
+      render json: { error: 'invalid code' }, status: 422
+    end
+  end
 
-  # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  private
 
-  # protected
-
-  # The path used after resending confirmation instructions.
-  # def after_resending_confirmation_instructions_path_for(resource_name)
-  #   super(resource_name)
-  # end
-
-  # The path used after confirmation.
-  # def after_confirmation_path_for(resource_name, resource)
-  #   super(resource_name, resource)
-  # end
+  def confirmation_params
+    params.require(:confirmation_code)
+  end
 end

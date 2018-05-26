@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
-  devise_for :users, path: 'auth', controllers: { registrations: 'users/registrations', sessions: 'users/sessions', confirmations: 'users/confirmations' }, defaults: {format: :json}
+  get 'confirmation', to: 'confirmations#show'
+
+  devise_for :users, path: 'auth', controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }, defaults: {format: :json}
 
   # Required by Devise
   root to: 'home#index'

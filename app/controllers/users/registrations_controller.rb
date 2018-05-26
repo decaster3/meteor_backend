@@ -11,10 +11,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    user = User.find_by(phone: params[:user][:phone])
+    if user && user.confirmed_at.nil?
+      if user.possible_to_send_sms?
+        user.delete
+      else
+        return render json: {error: 'Not allowed to request SMS.'}, status: 422
+      end
+    end
+    if params[:user][:inviter_token] || params[:user][:inviter_id]
+      user = User.find_by_token(params[:user][:inviter_token])
+      if user
+        params[:user][:inviter_id] = user.id
+      else
+        return render json: {
+            error: 'Invalid token.'
+        }, status: 422
+      end
+    end
+    # user.delete if user && user.verified_at.nil?
     build_resource(sign_up_params)
-
     resource.save
-    puts resource.phone
     # yield resource if block_given?
     if resource.persisted?
       # user should enter verification code that came to his phone
@@ -59,12 +76,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:inviter_id, keys: [:inviter_id])
   # end
+  #
+  def sign_up_params
+    if params[:user][:inviter_token]
+      user = User.find_by_token(params[:user][:inviter_token])
+      if user
+        params[:user][:inviter_id] = user.id
+        params.require(:user).permit(:name, :phone, :password, :inviter_id)
+      else
+        params.require(:user).permit(:name, :phone, :password)
+      end
+    else
+      params.require(:user).permit(:name, :phone, :password)
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

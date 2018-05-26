@@ -10,7 +10,8 @@ class User < ApplicationRecord
   has_many :referals, class_name: 'User', foreign_key: 'inviter'
 
   after_initialize :set_default_role, if: :new_record?
-  after_initialize :send_code
+  after_initialize :set_token, if: :new_record?
+  after_initialize :send_code, if: :new_record?
 
   MIN_EMAIL_LENGTH = 5
   MAX_EMAIL_LENGTH = 255
@@ -39,11 +40,34 @@ class User < ApplicationRecord
             length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
+  # attr_accessor :confirmed_at
   # attr_accessor :inviter
   # attr_accessible :inviter
 
   def verified?
-    !self.verified_at.nil?
+    !confirmed_at.nil?
+  end
+
+  def verify
+    self.confirmed_at = Time.now
+    save
+  end
+
+  def possible_to_send_sms?
+    Time.now - confirmation_sent_at > 2.minutes
+  end
+
+  def confirmed?
+    confirmed_at.nil?
+  end
+
+  def confirm?(code)
+    confirmation_code == code
+  end
+
+  def confirm
+    self.confirmed_at = Time.now
+    save
   end
 
   private
@@ -52,10 +76,18 @@ class User < ApplicationRecord
     self.role ||= :client
   end
 
+  def set_token
+    self.token ||= Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
+  end
+
   def send_code
-    SmsValidation.create!(
-      phone: self.phone,
-      expires_at: Time.now + 1.day
-    )
+    code = gen_code
+    self.confirmation_code = code
+    self.confirmation_sent_at = Time.now
+    ## Send sms logic goes here
+  end
+
+  def gen_code
+    111_111
   end
 end

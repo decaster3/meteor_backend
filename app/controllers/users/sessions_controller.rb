@@ -20,14 +20,15 @@ class Users::SessionsController < Devise::SessionsController
     yield resource if block_given?
     if resource.nil?
       render json: {
-          error: "user not found"
-      }
+        error: 'User not found'
+      }, status: 410
     else
       render json: {
-          email: resource.email,
-          phone: resource.phone,
-          id: resource.id,
-          role: resource.role
+          name: current_user.name,
+          phone: current_user.phone,
+          id: current_user.id,
+          role: current_user.role,
+          token: current_user.token
       }
     end
   end

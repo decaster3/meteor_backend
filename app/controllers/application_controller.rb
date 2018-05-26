@@ -23,4 +23,12 @@ class ApplicationController < ActionController::API
     redirect_to root_path, alert: 'Access denied.' unless current_user.admin?
   end
 
+  def authenticate
+    if authenticate_user!
+      if current_user.confirmed?
+        render json: {error: 'Not allowed to request SMS.'}, status: 400
+      end
+    end
+  end
+
 end
