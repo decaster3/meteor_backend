@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   validates :name, length: {minimum: 2}
   validates :description, length: {minimum: 10}
 
-  # has_one_attached :image
+  has_one_attached :image
   # validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
   # validates :image, presence: true
 
@@ -33,9 +33,10 @@ class Product < ApplicationRecord
                    .where(category_id: category_id)
     products.each do |product|
 
-      # if product.image.attached?
-      #   image_url = ImageUrl.img_url(product.image)
-      # end
+      image_url = nil
+      if product.image.attached?
+        image_url = ImageUrl.img_url(product.image)
+      end
 
       all << {
         name: product.name,
@@ -43,8 +44,8 @@ class Product < ApplicationRecord
         description: product.description,
         subcategories: product.subcategories,
         instances: ProductInstance.find_all_by_product(product, city),
-        options: OptionName.find_all_by_category_id(category_id)
-        # image_url: image_url
+        options: OptionName.find_all_by_category_id(category_id),
+        image_url: image_url
       }
     end
 

@@ -34,9 +34,11 @@ class User < ApplicationRecord
   # uniqueness: true,
   # length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
+
   validates :phone,
             presence: true,
             uniqueness: true,
+            format: { with: /\A(\+[0-9]+)\z/i },
             length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
