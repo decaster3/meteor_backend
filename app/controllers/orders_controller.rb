@@ -17,6 +17,17 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
+    params[:order][:user_id] = current_user.id if current_user
+    if params[:order][:user_phone] && params[:order][:user_name]
+      if u = User.find_by_phone(params[:order][:user_phone])
+        params[:order][:user_id] = u.id
+      else
+        params[:order][:user_id] = User.create_default(
+            params[:order][:user_phone],
+            params[:order][:user_name]
+        ).id
+      end
+    end
     unless params[:address].nil?
       address = Address.create!(address_params)
       params[:order][:address_id] = address.id
@@ -49,6 +60,7 @@ class OrdersController < ApplicationController
       :payment_method,
       :status,
       :address_id,
+      :user_id,
       order_products_attributes: %i[quantity product_instance_id]
     )
   end

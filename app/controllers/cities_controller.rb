@@ -6,6 +6,7 @@ class CitiesController < ApplicationController
 
   def index
     @cities = City.all
+    # User.create_default('+79991441024')
     # user = User.last
     # user.
     json_response(@cities)

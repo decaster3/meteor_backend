@@ -14,7 +14,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     user = User.find_by(phone: params[:user][:phone])
     if user && user.confirmed_at.nil?
       if user.possible_to_send_sms?
-        user.delete
+        user.jti = ''
+        user.save
       else
         return render json: {error: 'Not allowed to request SMS.'}, status: 422
       end
@@ -30,8 +31,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
     # user.delete if user && user.verified_at.nil?
-    build_resource(sign_up_params)
-    resource.save
+    if user.nil?
+      build_resource(sign_up_params)
+      resource.save
+    else
+      resource = user
+    end
     # yield resource if block_given?
     if resource.persisted?
       # user should enter verification code that came to his phone

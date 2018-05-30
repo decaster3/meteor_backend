@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 Country.create!([
-                  { name: 'Japan' }
+                  { name: 'Япония' }
                 ])
 City.create!([
-               { name: 'Osaka', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '58000000000' }
+               { name: 'Осака', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '58000000000' }
              ])
 Category.create!([
                    { name: 'Пицца' },
@@ -14,13 +14,13 @@ Category.create!([
                    { name: 'Напитки' }
                  ])
 OptionName.create!([
-                     { name: 'size', category_id: 1, is_characteristic: nil, is_belongs: false },
-                     { name: 'dough', category_id: 1, is_characteristic: nil, is_belongs: false },
-                     { name: 'weight', category_id: 1, is_characteristic: nil, is_belongs: true }
+                     { name: 'размер', category_id: 1, is_characteristic: nil, is_belongs: false },
+                     { name: 'тесто', category_id: 1, is_characteristic: nil, is_belongs: false },
+                     { name: 'вес', category_id: 1, is_characteristic: nil, is_belongs: true }
                    ])
 Product.create!([
-                  { name: 'Margherita', description: 'Pizza Margherita is a typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella fior di latte, fresh basil, salt and extra-virgin olive oil.', category_id: 1, is_topping: false },
-                  { name: 'Hawaiian', description: 'Hawaiian pizza is a pizza topped with tomato sauce, cheese, pineapple, and back bacon or ham.', category_id: 1, is_topping: false }
+                  { name: 'Маргарита', description: 'Пицца Маргарита, сделанная из томатов Сан Марино, сыра моцарелла, свежого базилика.', category_id: 1, is_topping: false },
+                  { name: 'Гавайская', description: 'Гавайская пицца из сыра, томатов, курицы и ананасов.', category_id: 1, is_topping: false }
                 ])
 ProductInstance.create!([
                           { product_id: 1 },
@@ -37,23 +37,23 @@ ProductInstance.create!([
                           { product_id: 2 }
                         ])
 OptionValue.create!([
-                      { value: '28 cm', option_name_id: 1 },
-                      { value: '38 cm', option_name_id: 1 },
-                      { value: '42 cm', option_name_id: 1 },
-                      { value: 'thin', option_name_id: 2 },
-                      { value: 'thick', option_name_id: 2 },
-                      { value: '750 g', option_name_id: 3 },
-                      { value: '650 g', option_name_id: 3 },
-                      { value: '550 g', option_name_id: 3 },
-                      { value: '850 g', option_name_id: 3 },
-                      { value: '750 g', option_name_id: 3 },
-                      { value: '650 g', option_name_id: 3 },
-                      { value: '785 g', option_name_id: 3 },
-                      { value: '685 g', option_name_id: 3 },
-                      { value: '585 g', option_name_id: 3 },
-                      { value: '885 g', option_name_id: 3 },
-                      { value: '785 g', option_name_id: 3 },
-                      { value: '685 g', option_name_id: 3 }
+                      { value: '28 см', option_name_id: 1 },
+                      { value: '38 см', option_name_id: 1 },
+                      { value: '42 см', option_name_id: 1 },
+                      { value: 'тонкое', option_name_id: 2 },
+                      { value: 'толстое', option_name_id: 2 },
+                      { value: '750 г', option_name_id: 3 },
+                      { value: '650 г', option_name_id: 3 },
+                      { value: '550 г', option_name_id: 3 },
+                      { value: '850 г', option_name_id: 3 },
+                      { value: '750 г', option_name_id: 3 },
+                      { value: '650 г', option_name_id: 3 },
+                      { value: '785 г', option_name_id: 3 },
+                      { value: '685 г', option_name_id: 3 },
+                      { value: '585 г', option_name_id: 3 },
+                      { value: '885 г', option_name_id: 3 },
+                      { value: '785 г', option_name_id: 3 },
+                      { value: '685 г', option_name_id: 3 }
                     ])
 City.find(1).products << Product.find(1)
 City.find(1).products << Product.find(2)

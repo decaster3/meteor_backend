@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   enum role: %i[client admin]
 
-  has_many :orders
   belongs_to :inviter, class_name: 'User', optional: true
+  has_many :orders
   has_many :referals, class_name: 'User', foreign_key: 'inviter'
+  has_many :meteors
 
   after_initialize :set_default_role, if: :new_record?
   after_initialize :set_token, if: :new_record?
@@ -34,7 +35,6 @@ class User < ApplicationRecord
   # uniqueness: true,
   # length: { minimum: MIN_EMAIL_LENGTH, maximum: MAX_EMAIL_LENGTH }
 
-
   validates :phone,
             presence: true,
             uniqueness: true,
@@ -56,7 +56,7 @@ class User < ApplicationRecord
   end
 
   def possible_to_send_sms?
-    Time.now - confirmation_sent_at > 2.minutes
+    Time.now - confirmation_sent_at > 2.seconds
   end
 
   def confirmed?
@@ -70,6 +70,12 @@ class User < ApplicationRecord
   def confirm
     self.confirmed_at = Time.now
     save
+  end
+
+  def self.create_default(phone, name)
+    password = Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
+    User.create(name: name, phone: phone, password: password, confirmed_at: Time.now)
+    password
   end
 
   private
@@ -91,5 +97,13 @@ class User < ApplicationRecord
 
   def gen_code
     111_111
+  end
+
+  def add_meteors(value, description = 'Add meteors')
+    meteors.create(value: value, description: description)
+  end
+
+  def subtract_meteors(value, description = 'Subtract meteors')
+    add_meteors(-1 * value, description)
   end
 end

@@ -6,6 +6,7 @@ class ProductInstance < ApplicationRecord
   has_many :option_values, through: :product_options, dependent: :destroy
   has_many :cities, through: :prices
   has_many :prices, dependent: :delete_all
+  has_and_belongs_to_many :promotions
   accepts_nested_attributes_for :option_values
   accepts_nested_attributes_for :prices
 
@@ -17,6 +18,9 @@ class ProductInstance < ApplicationRecord
   #   errors.add(:product_instance, ': option_values is nil') if
   #       Category.find(category_id_of_option_value).nil?
   # end
+  def price
+    prices.first.value
+  end
 
   def self.find_all_by_product(product, city)
     all = ProductInstance.where(product_id: product.id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_22_114325) do
+ActiveRecord::Schema.define(version: 2018_05_30_195509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2018_05_22_114325) do
     t.datetime "updated_at", null: false
     t.integer "currency"
     t.string "phone"
+    t.string "google_key"
     t.index ["country_id"], name: "index_cities_on_country_id"
   end
 
@@ -119,8 +120,13 @@ ActiveRecord::Schema.define(version: 2018_05_22_114325) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "orders_promotions", id: false, force: :cascade do |t|
+    t.bigint "promotion_id", null: false
+    t.bigint "order_id", null: false
+  end
+
   create_table "prices", force: :cascade do |t|
-    t.string "value"
+    t.float "value"
     t.bigint "city_id"
     t.bigint "product_instance_id"
     t.datetime "created_at", null: false
@@ -134,6 +140,11 @@ ActiveRecord::Schema.define(version: 2018_05_22_114325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_instances_on_product_id"
+  end
+
+  create_table "product_instances_promotions", id: false, force: :cascade do |t|
+    t.bigint "promotion_id", null: false
+    t.bigint "product_instance_id", null: false
   end
 
   create_table "product_options", force: :cascade do |t|
@@ -158,6 +169,14 @@ ActiveRecord::Schema.define(version: 2018_05_22_114325) do
   create_table "products_subcategories", id: false, force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "subcategory_id", null: false
+  end
+
+  create_table "promotions", force: :cascade do |t|
+    t.bigint "city_id"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_promotions_on_city_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -205,5 +224,6 @@ ActiveRecord::Schema.define(version: 2018_05_22_114325) do
   add_foreign_key "product_options", "option_values", on_delete: :cascade
   add_foreign_key "product_options", "product_instances", on_delete: :cascade
   add_foreign_key "products", "categories", on_delete: :cascade
+  add_foreign_key "promotions", "cities"
   add_foreign_key "subcategories", "categories", on_delete: :cascade
 end
