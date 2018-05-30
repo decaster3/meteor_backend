@@ -4,7 +4,8 @@ Country.create!([
                   { name: 'Япония' }
                 ])
 City.create!([
-               { name: 'Осака', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '58000000000' }
+               { name: 'Осака', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '83000000000' },
+               { name: 'Сеул', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'KOW', phone: '82000000000' }
              ])
 Category.create!([
                    { name: 'Пицца' },
@@ -56,6 +57,7 @@ OptionValue.create!([
                       { value: '685 г', option_name_id: 3 }
                     ])
 City.find(1).products << Product.find(1)
+City.find(2).products << Product.find(1)
 City.find(1).products << Product.find(2)
 Price.create!([
                 { value: '255', city_id: 1, product_instance_id: 1 },
