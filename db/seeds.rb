@@ -15,9 +15,9 @@ Category.create!([
                    { name: 'Напитки' }
                  ])
 OptionName.create!([
-                     { name: 'размер', category_id: 1, is_characteristic: nil, is_belongs: false },
-                     { name: 'тесто', category_id: 1, is_characteristic: nil, is_belongs: false },
-                     { name: 'вес', category_id: 1, is_characteristic: nil, is_belongs: true }
+                     { name: 'размер', category_id: 1, is_characteristic: nil, belongs: false },
+                     { name: 'тесто', category_id: 1, is_characteristic: nil, belongs: false },
+                     { name: 'вес', category_id: 1, is_characteristic: nil, belongs: true }
                    ])
 Product.create!([
                   { name: 'Маргарита', description: 'Пицца Маргарита, сделанная из томатов Сан Марино, сыра моцарелла, свежого базилика.', category_id: 1, is_topping: false },
