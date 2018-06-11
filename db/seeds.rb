@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 Country.create!([
-                  { name: 'Япония' }
+                  { name: 'Япония' },
+                  { name: 'Корея' },
+                  { name: 'Россия' },
                 ])
 City.create!([
                { name: 'Осака', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'JPY', phone: '83000000000' },
-               { name: 'Сеул', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 1, currency: 'KOW', phone: '82000000000' }
+               { name: 'Иннополис', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 3, currency: 'RUB', phone: '+7000000000', google_key: 'Innopolis' },
+               { name: 'Сеул', schedule: '{ "opens_at": "8am", "closes_at": "11pm"}', country_id: 2, currency: 'KOW', phone: '82000000000' }
              ])
 Category.create!([
                    { name: 'Пицца' },

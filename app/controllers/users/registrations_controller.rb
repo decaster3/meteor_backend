@@ -11,32 +11,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    user = User.find_by(phone: params[:user][:phone])
-    if user && user.confirmed_at.nil?
-      if user.possible_to_send_sms?
-        user.jti = ''
-        user.save
-      else
-        return render json: {error: 'Not allowed to request SMS.'}, status: 422
-      end
-    end
-    if params[:user][:inviter_token] || params[:user][:inviter_id]
-      user = User.find_by_token(params[:user][:inviter_token])
-      if user
-        params[:user][:inviter_id] = user.id
-      else
-        return render json: {
-            error: 'Invalid token.'
-        }, status: 422
-      end
-    end
+    # user = User.find_by(phone: params[:user][:phone])
+    # if user && user.confirmed_at.nil?
+    #   if user.possible_to_send_sms?
+    #     user.delete
+    #   else
+    #     return render json: {error: 'Not allowed to request SMS.'}, status: 422
+    #   end
+    # end
+    # if params[:user][:inviter_token] || params[:user][:inviter_id]
+    #   user = User.find_by_token(params[:user][:inviter_token])
+    #   if user
+    #     params[:user][:inviter_id] = user.id
+    #   else
+    #     return render json: {
+    #         error: 'Invalid token.'
+    #     }, status: 422
+    #   end
+    # end
     # user.delete if user && user.verified_at.nil?
-    if user.nil?
-      build_resource(sign_up_params)
-      resource.save
-    else
-      resource = user
-    end
+    # build_resource(sign_up_params)
+    # resource.save
+    resource = User.last
     # yield resource if block_given?
     if resource.persisted?
       # user should enter verification code that came to his phone
@@ -45,15 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)
-      else
-        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-        expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
-    else
-      clean_up_passwords resource
-      set_minimum_password_length
-      respond_with resource
     end
   end
 
@@ -63,9 +51,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super
+  end
 
   # DELETE /resource
   # def destroy

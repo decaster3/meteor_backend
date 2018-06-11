@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
   def authenticate
     if authenticate_user!
       if current_user.confirmed?
-        render json: {error: 'Not allowed to request SMS.'}, status: 400
+        render json: {error: 'User not confirmed.'}, status: 400
       end
     end
   end

@@ -106,4 +106,6 @@ class User < ApplicationRecord
   def subtract_meteors(value, description = 'Subtract meteors')
     add_meteors(-1 * value, description)
   end
+
+  # def make order()
 end
