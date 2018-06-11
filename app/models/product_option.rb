@@ -5,7 +5,7 @@ class ProductOption < ApplicationRecord
 
   def self.find_all_by_product_instance(product_instance, belongs)
     all = ProductOption.where(product_instance: product_instance.id).select do |po|
-      po.option_value.option_name.is_belongs == belongs
+      po.option_value.option_name.belongs == belongs
     end
     pos = []
     all.map do |po|
@@ -14,11 +14,11 @@ class ProductOption < ApplicationRecord
     return pos
   end
 
-  def self.find_all_belonging_by_product_instance(pi)
+  def self.find_all_independent_by_product_instance(pi)
     find_all_by_product_instance(pi, true)
   end
 
-  def self.find_all_not_belonging_by_product_instance(pi)
+  def self.find_all_dependent_by_product_instance(pi)
     find_all_by_product_instance(pi, false)
   end
 

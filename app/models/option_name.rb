@@ -2,7 +2,7 @@
 
 class OptionName < ApplicationRecord
   validates :name, presence: true
-  validates :is_belongs, exclusion: { in: [nil] }
+  validates :belongs, exclusion: { in: [nil] }
   validates :name, length: { minimum: 2 }
 
   has_many :option_values
@@ -16,7 +16,7 @@ class OptionName < ApplicationRecord
       result << {
         id: on.id,
         name: on.name,
-        is_belongs: on.is_belongs,
+        belongs: on.belongs,
         option_values: OptionValue.find_all_distinct_by_option_name(on)
       }
     end

@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2018_05_30_200713) do
     t.datetime "updated_at", null: false
     t.bigint "category_id"
     t.boolean "is_characteristic"
-    t.boolean "is_belongs", default: false, null: false
+    t.boolean "belongs", default: false, null: false
     t.index ["category_id"], name: "index_option_names_on_category_id"
   end
 
