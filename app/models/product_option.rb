@@ -5,7 +5,7 @@ class ProductOption < ApplicationRecord
 
   def self.find_all_by_product_instance(product_instance, belongs)
     all = ProductOption.where(product_instance: product_instance.id).select do |po|
-      po.option_value.option_name.belongs == belongs
+      po.option_value.option_name.is_characteristic == belongs
     end
     pos = []
     all.map do |po|
