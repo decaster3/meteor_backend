@@ -24,13 +24,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource = User.find_by(phone: params[:user][:phone])
     if resource && resource.confirmed_at.nil?
       if resource.possible_to_send_sms?
-        resource.edit(params)
+        resource.update_attributes(sign_up_params)
+        resource.jti = SecureRandom.uuid
+        resource.save
       else
         return render json: {error: 'Not allowed to request SMS.'}, status: 422
       end
     end
-    build_resource(sign_up_params)
-    resource.save
+    unless resource
+      resource = build_resource(sign_up_params)
+      resource.save
+    end
     # resource = User.last
     yield resource if block_given?
     if resource.persisted?
@@ -76,17 +80,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
   #
   def sign_up_params
-    params[:user][:jti] = SecureRandom.uuid
     if params[:user][:inviter_token]
       user = User.find_by_token(params[:user][:inviter_token])
       if user
         params[:user][:inviter_id] = user.id
-        params.require(:user).permit(:name, :phone, :password, :inviter_id, :jti)
+        params.require(:user).permit(:name, :phone, :password, :inviter_id)
       else
-        params.require(:user).permit(:name, :phone, :password, :jti)
+        params.require(:user).permit(:name, :phone, :password)
       end
     else
-      params.require(:user).permit(:name, :phone, :password, :jti)
+      params.require(:user).permit(:name, :phone, :password)
     end
   end
 

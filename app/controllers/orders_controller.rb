@@ -17,14 +17,14 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    params[:order][:user_id] = current_user.id if current_user
-    if params[:order][:user_phone] && params[:order][:user_name]
+    # params[:order][:user_id] = current_user.id if current_user
+    if params[:order][:phone] && params[:order][:name]
       if u = User.find_by_phone(params[:order][:user_phone])
         params[:order][:user_id] = u.id
       else
         params[:order][:user_id] = User.create_default(
-            params[:order][:user_phone],
-            params[:order][:user_name]
+            params[:order][:phone],
+            params[:order][:name]
         ).id
       end
     end
