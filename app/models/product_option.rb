@@ -15,11 +15,11 @@ class ProductOption < ApplicationRecord
   end
 
   def self.find_all_independent_by_product_instance(pi)
-    find_all_by_product_instance(pi, true)
+    find_all_by_product_instance(pi, false)
   end
 
   def self.find_all_dependent_by_product_instance(pi)
-    find_all_by_product_instance(pi, false)
+    find_all_by_product_instance(pi, true)
   end
 
 end

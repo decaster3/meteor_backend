@@ -16,7 +16,7 @@ class OptionName < ApplicationRecord
       result << {
         id: on.id,
         name: on.name,
-        belongs: on.is_characteristic,
+        is_characteristic: on.is_characteristic,
         option_values: OptionValue.find_all_distinct_by_option_name(on)
       }
     end

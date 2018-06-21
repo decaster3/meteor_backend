@@ -11,29 +11,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    # user = User.find_by(phone: params[:user][:phone])
-    # if user && user.confirmed_at.nil?
-    #   if user.possible_to_send_sms?
-    #     user.delete
-    #   else
-    #     return render json: {error: 'Not allowed to request SMS.'}, status: 422
-    #   end
-    # end
-    # if params[:user][:inviter_token] || params[:user][:inviter_id]
-    #   user = User.find_by_token(params[:user][:inviter_token])
-    #   if user
-    #     params[:user][:inviter_id] = user.id
-    #   else
-    #     return render json: {
-    #         error: 'Invalid token.'
-    #     }, status: 422
-    #   end
-    # end
-    # user.delete if user && user.verified_at.nil?
-    # build_resource(sign_up_params)
-    # resource.save
-    resource = User.last
-    # yield resource if block_given?
+    if params[:user][:inviter_token] || params[:user][:inviter_id]
+      user = User.find_by_token(params[:user][:inviter_token])
+      if user
+        params[:user][:inviter_id] = user.id
+      else
+        return render json: {
+            error: 'Invalid token.'
+        }, status: 422
+      end
+    end
+    resource = User.find_by(phone: params[:user][:phone])
+    if resource && resource.confirmed_at.nil?
+      if resource.possible_to_send_sms?
+        resource.edit(params)
+      else
+        return render json: {error: 'Not allowed to request SMS.'}, status: 422
+      end
+    end
+    build_resource(sign_up_params)
+    resource.save
+    # resource = User.last
+    yield resource if block_given?
     if resource.persisted?
       # user should enter verification code that came to his phone
       # s = SmsValidation.order('expires_at DESC').limit(1).first
@@ -77,16 +76,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
   #
   def sign_up_params
+    params[:user][:jti] = SecureRandom.uuid
     if params[:user][:inviter_token]
       user = User.find_by_token(params[:user][:inviter_token])
       if user
         params[:user][:inviter_id] = user.id
-        params.require(:user).permit(:name, :phone, :password, :inviter_id)
+        params.require(:user).permit(:name, :phone, :password, :inviter_id, :jti)
       else
-        params.require(:user).permit(:name, :phone, :password)
+        params.require(:user).permit(:name, :phone, :password, :jti)
       end
     else
-      params.require(:user).permit(:name, :phone, :password)
+      params.require(:user).permit(:name, :phone, :password, :jti)
     end
   end
 
