@@ -74,8 +74,9 @@ class User < ApplicationRecord
 
   def self.create_default(phone, name)
     password = Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
-    User.create(name: name, phone: phone, password: password, confirmed_at: Time.now)
-    password
+    user = User.create!(name: name, phone: phone, password: password, confirmed_at: Time.now - 1.day)
+    print(user)
+    return user
   end
 
   private
