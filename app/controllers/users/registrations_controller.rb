@@ -26,7 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         resource.update_attributes(sign_up_params)
         resource.jti = SecureRandom.uuid
         resource.save
-    else if resource
+    elsif resource
         return render json: {error: 'Not allowed to request SMS.'}, status: 422
     end
     unless resource
