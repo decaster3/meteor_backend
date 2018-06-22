@@ -38,8 +38,8 @@ class User < ApplicationRecord
   validates :phone,
             presence: true,
             uniqueness: true,
-            format: { with: /\A(\+[0-9]+)\z/i },
-            length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
+            format: {with: /\A(\+[0-9]+)\z/i},
+            length: {minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH}
 
   # attr_accessor :phone, :email
   # attr_accessor :confirmed_at
@@ -79,6 +79,14 @@ class User < ApplicationRecord
     return user
   end
 
+  def add_meteors(value, description = 'Add meteors')
+    meteors.create(value: value, description: description)
+  end
+
+  def subtract_meteors(value, description = 'Subtract meteors')
+    add_meteors(-1 * value, description)
+  end
+
   private
 
   def set_default_role
@@ -98,14 +106,6 @@ class User < ApplicationRecord
 
   def gen_code
     111_111
-  end
-
-  def add_meteors(value, description = 'Add meteors')
-    meteors.create(value: value, description: description)
-  end
-
-  def subtract_meteors(value, description = 'Subtract meteors')
-    add_meteors(-1 * value, description)
   end
 
   # def make order()

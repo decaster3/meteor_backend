@@ -5,9 +5,15 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
-
-    render json: @users
+    render json: {
+        name: current_user.name,
+        phone: current_user.phone,
+        id: current_user.id,
+        role: current_user.role,
+        token: current_user.token,
+        meteors: current_user.meteors,
+        orders: current_user.orders
+    }
   end
 
   # GET /users/1

@@ -28,7 +28,8 @@ class Users::SessionsController < Devise::SessionsController
           phone: current_user.phone,
           id: current_user.id,
           role: current_user.role,
-          token: current_user.token
+          token: current_user.token,
+          meteors: current_user.meteors
       }
     end
   end
