@@ -59,3 +59,6 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
 gem 'seed_dump'
+
+gem "rubocop", "~> 0.57.2", :group => [:development]
+gem "rufo", "~> 0.3.1", :group => [:development]
