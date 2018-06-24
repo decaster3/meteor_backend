@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
   before_action :authenticate
@@ -5,15 +7,48 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    render json: {
-        name: current_user.name,
-        phone: current_user.phone,
-        id: current_user.id,
-        role: current_user.role,
-        token: current_user.token,
-        meteors: current_user.meteors,
-        orders: current_user.orders
-    }
+    @user = User.includes(
+      :meteors,
+      orders: [
+        order_products: [
+          product_instance: [
+            :product
+          ]
+        ]
+      ]
+    ).find(current_user.id)
+
+    render json: @user, only: %i[id name token phone role],
+           include: [
+             :meteors,
+             orders: {
+               only: %i[id payment_method status],
+               include: {
+                 order_products: {
+                   only: %i[id quantity],
+                   include: {
+                     product_instance: {
+                       only: [:id],
+                       include: {
+                         product: {
+                           only: %i[id name description]
+                         }
+                       }
+                     }
+                   }
+                 }
+               }
+             }
+           ]
+    # render json: {
+    #     name: current_user.name,
+    #     phone: current_user.phone,
+    #     id: current_user.id,
+    #     role: current_user.role,
+    #     token: current_user.token,
+    #     meteors: current_user.meteors,
+    #     orders: Order.all_attributes_by_user(current_user), include: ['order_products']
+    # }
   end
 
   # GET /users/1

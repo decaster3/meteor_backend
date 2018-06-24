@@ -19,6 +19,11 @@ class Order < ApplicationRecord
     end
   end
 
+  def self.all_attributes_by_user(user)
+    ords = Order.includes(:order_products).where(user_id: user.id)
+    ords
+  end
+
   private
 
   def set_default_status
