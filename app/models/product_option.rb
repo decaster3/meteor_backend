@@ -1,6 +1,7 @@
 class ProductOption < ApplicationRecord
   belongs_to :product_instance
   belongs_to :option_value
+  has_one :option_name, through: :option_value
 
 
   def self.find_all_by_product_instance(product_instance, belongs)
