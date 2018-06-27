@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @user = User.includes(
+      :inviter,
       :meteors,
       orders: [
         order_products: [
@@ -28,6 +29,9 @@ class UsersController < ApplicationController
     render json: @user, only: %i[id name token phone role],
            include: [
              :meteors,
+             inviter: {
+               only: %i[id name phone]
+             },
              orders: {
                only: %i[id payment_method status],
                include: {
