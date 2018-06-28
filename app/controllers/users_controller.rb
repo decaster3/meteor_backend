@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
-  before_action :authenticate
+  # before_action :authenticate
   # before_action :admin_only
 
   # GET /users
@@ -18,59 +18,62 @@ class UsersController < ApplicationController
                }
              ]
     else
-      @user = User.includes(
-        :inviter,
-        :meteors,
-        orders: [
-          order_products: [
-            product_instance: [
-              :product,
-              prices: [
-                :city
-              ],
-              product_options: %i[
-                option_value
-                option_name
+      :authenticate
+      if current_user
+        @user = User.includes(
+          :inviter,
+          :meteors,
+          orders: [
+            order_products: [
+              product_instance: [
+                :product,
+                prices: [
+                  :city
+                ],
+                product_options: %i[
+                  option_value
+                  option_name
+                ]
               ]
             ]
           ]
-        ]
-      ).find(current_user.id)
+        ).find(current_user.id)
 
-      render json: @user, only: %i[id name token phone role],
-             include: [
-               :meteors,
-               inviter: {
-                 only: %i[id name phone]
-               },
-               orders: {
-                 only: %i[id payment_method status],
-                 include: {
-                   order_products: {
-                     only: %i[id quantity],
-                     include: {
-                       product_instance: {
-                         only: [:id],
-                         include: {
-                           product: {
-                             only: %i[id name description]
-                           },
-                           product_options: {
-                             only: %i[],
-                             include: {
-                               option_value: {
-                                 only: %i[id value]
-                               },
-                               option_name: {
-                                 only: %i[id name is_characteristic]
+        render json: @user, only: %i[id name token phone role],
+               include: [
+                 :meteors,
+                 inviter: {
+                   only: %i[id name phone]
+                 },
+                 orders: {
+                   only: %i[id payment_method status],
+                   include: {
+                     order_products: {
+                       only: %i[id quantity],
+                       include: {
+                         product_instance: {
+                           only: [:id],
+                           include: {
+                             product: {
+                               only: %i[id name description]
+                             },
+                             product_options: {
+                               only: %i[],
+                               include: {
+                                 option_value: {
+                                   only: %i[id value]
+                                 },
+                                 option_name: {
+                                   only: %i[id name is_characteristic]
+                                 }
                                }
-                             }
-                           },
-                           prices: {
-                             only: %i[value],
-                             include: {
-                               city: {
-                                 only: %i[currency]
+                             },
+                             prices: {
+                               only: %i[value],
+                               include: {
+                                 city: {
+                                   only: %i[currency]
+                                 }
                                }
                              }
                            }
@@ -79,8 +82,8 @@ class UsersController < ApplicationController
                      }
                    }
                  }
-               }
-             ]
+               ]
+      end
     end
   end
 

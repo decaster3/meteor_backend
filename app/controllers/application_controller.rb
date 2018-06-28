@@ -27,7 +27,12 @@ class ApplicationController < ActionController::API
     if authenticate_user!
       if current_user.confirmed?
         render json: {error: 'User not confirmed.'}, status: 400
+        true
+      else
+        false
       end
+    else
+      false
     end
   end
 
