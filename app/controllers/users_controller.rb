@@ -7,59 +7,71 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @user = User.includes(
-      :inviter,
-      :meteors,
-      orders: [
-        order_products: [
-          product_instance: [
-            :product,
-            prices: [
-              :city
-            ],
-            product_options: %i[
-              option_value
-              option_name
+    if params[:phone]
+      @user = User.includes(
+        :inviter
+      ).find_by(phone: "+#{params[:phone].strip}")
+      render json: @user, only: %i[id name token phone role],
+             include: [
+               inviter: {
+                 only: %i[id name phone]
+               }
+             ]
+    else
+      @user = User.includes(
+        :inviter,
+        :meteors,
+        orders: [
+          order_products: [
+            product_instance: [
+              :product,
+              prices: [
+                :city
+              ],
+              product_options: %i[
+                option_value
+                option_name
+              ]
             ]
           ]
         ]
-      ]
-    ).find(current_user.id)
+      ).find(current_user.id)
 
-    render json: @user, only: %i[id name token phone role],
-           include: [
-             :meteors,
-             inviter: {
-               only: %i[id name phone]
-             },
-             orders: {
-               only: %i[id payment_method status],
-               include: {
-                 order_products: {
-                   only: %i[id quantity],
-                   include: {
-                     product_instance: {
-                       only: [:id],
-                       include: {
-                         product: {
-                           only: %i[id name description]
-                         },
-                         product_options: {
-                           only: %i[],
-                           include: {
-                             option_value: {
-                               only: %i[id value]
-                             },
-                             option_name: {
-                               only: %i[id name is_characteristic]
+      render json: @user, only: %i[id name token phone role],
+             include: [
+               :meteors,
+               inviter: {
+                 only: %i[id name phone]
+               },
+               orders: {
+                 only: %i[id payment_method status],
+                 include: {
+                   order_products: {
+                     only: %i[id quantity],
+                     include: {
+                       product_instance: {
+                         only: [:id],
+                         include: {
+                           product: {
+                             only: %i[id name description]
+                           },
+                           product_options: {
+                             only: %i[],
+                             include: {
+                               option_value: {
+                                 only: %i[id value]
+                               },
+                               option_name: {
+                                 only: %i[id name is_characteristic]
+                               }
                              }
-                           }
-                         },
-                         prices: {
-                           only: %i[value],
-                           include: {
-                             city: {
-                               only: %i[currency]
+                           },
+                           prices: {
+                             only: %i[value],
+                             include: {
+                               city: {
+                                 only: %i[currency]
+                               }
                              }
                            }
                          }
@@ -68,8 +80,8 @@ class UsersController < ApplicationController
                    }
                  }
                }
-             }
-           ]
+             ]
+    end
   end
 
   # GET /users/1
