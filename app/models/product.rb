@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
   include ImageUrl
   validates :name, :description, presence: true
   validates :is_topping, exclusion: { in: [nil] }
   validates :name, :description, uniqueness: true
-  validates :name, length: {minimum: 2}
-  validates :description, length: {minimum: 10}
+  validates :name, length: { minimum: 2 }
+  validates :description, length: { minimum: 10 }
 
   has_one_attached :image
   # validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
@@ -15,11 +17,13 @@ class Product < ApplicationRecord
   belongs_to :category
   validates :category, presence: true
 
-
-
-  has_many :product_instances
+  has_many :product_instances, inverse_of: :product
+  has_many :prices, through: :product_instances, inverse_of: :product
+  has_many :option_values, through: :product_instances, inverse_of: :products
   has_and_belongs_to_many :subcategories
-
+  accepts_nested_attributes_for :product_instances
+  accepts_nested_attributes_for :option_values
+  accepts_nested_attributes_for :prices
   after_initialize :init
 
   def init
@@ -32,11 +36,8 @@ class Product < ApplicationRecord
                    .select(:id, :name, :description, :category_id, :is_topping)
                    .where(category_id: category_id)
     products.each do |product|
-
       image_url = nil
-      if product.image.attached?
-        image_url = ImageUrl.img_url(product.image)
-      end
+      image_url = ImageUrl.img_url(product.image) if product.image.attached?
 
       all << {
         name: product.name,
@@ -49,6 +50,6 @@ class Product < ApplicationRecord
       }
     end
 
-    return all
+    all
   end
 end

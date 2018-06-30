@@ -6,8 +6,7 @@ class Price < ApplicationRecord
   # validate :product_instance_has_a_city?
 
   belongs_to :city
-  belongs_to :product_instance
-
+  belongs_to :product_instance, inverse_of: :prices
   private
 
   def product_instance_has_a_city?

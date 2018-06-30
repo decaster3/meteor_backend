@@ -7,6 +7,7 @@ class OptionValue < ApplicationRecord
   belongs_to :option_name
   has_many :product_instances
   has_many :product_instances, through: :product_options
+  has_many :products, through: :product_instances
 
   def self.find_all_by_product_option(product_option)
     ov = product_option.option_value
