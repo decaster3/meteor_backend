@@ -11,7 +11,10 @@ class ProductsController < ApplicationController
   end
 
   def show
-    json_response(@product)
+    render json: {
+        id: @product.id,
+        img_url: url_for(@product.image)
+    }
   end
 
   def update
