@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PromotionsController < ApplicationController
-  before_action :set_promotion, only: [:show, :update, :destroy]
+  before_action :set_promotion, only: %i[show update destroy]
 
   # GET /promotions
   # GET /promotions.json
@@ -9,8 +11,7 @@ class PromotionsController < ApplicationController
 
   # GET /promotions/1
   # GET /promotions/1.json
-  def show
-  end
+  def show; end
 
   # POST /promotions
   # POST /promotions.json
@@ -41,13 +42,14 @@ class PromotionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_promotion
-      @promotion = Promotion.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def promotion_params
-      params.require(:promotion).permit(:city_id, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_promotion
+    @promotion = Promotion.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def promotion_params
+    params.require(:promotion).permit(:city_id, :price)
+  end
 end
