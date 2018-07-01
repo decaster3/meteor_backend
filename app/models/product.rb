@@ -32,7 +32,7 @@ class Product < ApplicationRecord
 
   def self.all_attributes(city, category_id)
     all = []
-    products = city.products
+    products = city.products.includes(:subcategories)
                    .select(:id, :name, :description, :category_id, :is_topping)
                    .where(category_id: category_id)
     products.each do |product|
