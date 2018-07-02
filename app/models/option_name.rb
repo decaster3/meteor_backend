@@ -8,7 +8,7 @@ class OptionName < ApplicationRecord
   has_many :option_values
   belongs_to :category
 
-  def self.find_all_by_category_id(category_id)
+  def self.find_all_by_category_id(category_id, option_values)
     result = []
     all = OptionName.where(category_id: category_id)
     all.map do |on|
@@ -17,7 +17,7 @@ class OptionName < ApplicationRecord
         id: on.id,
         name: on.name,
         is_characteristic: on.is_characteristic,
-        option_values: OptionValue.find_all_distinct_by_option_name(on)
+        option_values: OptionValue.find_all_distinct_by_option_name(on, option_values)
       }
     end
     result

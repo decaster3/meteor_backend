@@ -38,14 +38,19 @@ class Product < ApplicationRecord
     products.each do |product|
       image_url = nil
       image_url = ImageUrl.img_url(product.image) if product.image.attached?
-
+      instances = ProductInstance.find_all_by_product(product, city)
+      option_values = []
+      instances.each do |inst|
+        option_values += inst[:independent_options]
+        option_values += inst[:dependent_options]
+      end
       all << {
         name: product.name,
         id: product.id,
         description: product.description,
         subcategories: product.subcategories,
-        instances: ProductInstance.find_all_by_product(product, city),
-        options: OptionName.find_all_by_category_id(category_id),
+        instances: instances,
+        options: OptionName.find_all_by_category_id(category_id, option_values),
         image_url: image_url
       }
     end
