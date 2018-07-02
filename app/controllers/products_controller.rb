@@ -27,9 +27,6 @@ class ProductsController < ApplicationController
   end
 
   def create
-    for x in product_params
-      print(x)
-    end
     @product = Product.new(product_params)
     if @product.save
       params[:cities_attributes].each do |city|
