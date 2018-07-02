@@ -32,25 +32,76 @@ class Product < ApplicationRecord
 
   def self.all_attributes(city, category_id)
     all = []
-    products = city.products.includes(:subcategories)
-                   .select(:id, :name, :description, :category_id, :is_topping)
-                   .where(category_id: category_id)
+    products = city.products.with_attached_image.includes(
+      :subcategories,
+      product_instances: [
+        :prices,
+        product_options: %i[
+          option_value
+          option_name
+        ]
+      ]
+    ).where(category_id: category_id)
+
     products.each do |product|
       image_url = nil
       image_url = ImageUrl.img_url(product.image) if product.image.attached?
-      instances = ProductInstance.find_all_by_product(product, city)
-      option_values = []
-      instances.each do |inst|
-        option_values += inst[:independent_options]
-        option_values += inst[:dependent_options]
+      options = []
+      product_options = {}
+      instances = []
+      product.product_instances.each do |instance|
+        price = instance.prices.select { |p| p.city_id == city.id }[0]
+        independent_options = []
+        dependent_options = []
+        instance.product_options.each do |product_option|
+          unless product_options[product_option.option_name.id]
+            product_options[product_option.option_name.id] = {
+              id: product_option.option_name.id,
+              name: product_option.option_name.name,
+              is_characteristic: product_option.option_name.is_characteristic,
+              option_values: []
+            }
+          end
+
+          product_options[product_option.option_name.id][:option_values] << {
+              id: product_option.option_value_id,
+              value: product_option.option_value.value
+          }
+          if product_option.option_name.is_characteristic
+            dependent_options << {
+              value_id: product_option.option_value_id,
+              value: product_option.option_value.value,
+              option_id: product_option.option_name.id
+            }
+          else
+            independent_options << {
+              value_id: product_option.option_value_id,
+              value: product_option.option_value.value,
+              option_id: product_option.option_name.id
+            }
+          end
+        end
+        instances << {
+          id: instance.id,
+          independent_options: independent_options,
+          dependent_options: dependent_options,
+          price: {
+            value: price.value,
+            currency: city.currency
+          }
+        }
       end
+      product_options.each do |key, product_option|
+        product_option[:option_values] = product_option[:option_values].uniq
+      end
+      options = product_options.values
       all << {
         name: product.name,
         id: product.id,
         description: product.description,
         subcategories: product.subcategories,
         instances: instances,
-        options: OptionName.find_all_by_category_id(category_id, option_values),
+        options: options,
         image_url: image_url
       }
     end

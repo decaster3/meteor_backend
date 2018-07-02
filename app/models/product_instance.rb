@@ -22,22 +22,4 @@ class ProductInstance < ApplicationRecord
     prices.first.value
   end
 
-  def self.find_all_by_product(product, city)
-    all = ProductInstance.where(product_id: product.id)
-    pis = []
-    all.map do |pi|
-      price = Price.find_by(city_id: city.id, product_instance_id: pi.id)
-      next if price.nil?
-      pis << {
-        id: pi.id,
-        independent_options: ProductOption.find_all_independent_by_product_instance(pi),
-        dependent_options: ProductOption.find_all_dependent_by_product_instance(pi),
-        price: {
-          value: price.value,
-          currency: city.currency
-        }
-      }
-    end
-    pis
-  end
 end

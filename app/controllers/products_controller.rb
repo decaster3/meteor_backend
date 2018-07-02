@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
   def update
     if params[:image]
       @product.image.attach(params[:image])
+      json_response @product
     else
       @product.update(product_params)
       json_response @product
