@@ -17,6 +17,7 @@ Category.create!([
                      {name: 'Закуски'},
                      {name: 'Напитки'}
                  ])
+Subcategory.create!(name: "ololo", category_id: 1)
 OptionName.create!([
                        {name: 'размер', category_id: 1, is_characteristic: false},
                        {name: 'тесто', category_id: 1, is_characteristic: false},
@@ -26,6 +27,7 @@ Product.create!([
                     {name: 'Маргарита', description: 'Пицца Маргарита, сделанная из томатов Сан Марино, сыра моцарелла, свежого базилика.', category_id: 1, is_topping: false},
                     {name: 'Гавайская', description: 'Гавайская пицца из сыра, томатов, курицы и ананасов.', category_id: 1, is_topping: false}
                 ])
+Product.first.subcategories << Subcategory.first
 ProductInstance.create!([
                             {product_id: 1},
                             {product_id: 1},

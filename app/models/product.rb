@@ -33,7 +33,7 @@ class Product < ApplicationRecord
   def self.all_attributes(city, category_id)
     all = []
     products = city.products.with_attached_image.includes(
-      :subcategories,
+      subcategories: [],
       product_instances: [
         :prices,
         product_options: %i[
@@ -64,8 +64,8 @@ class Product < ApplicationRecord
           end
 
           product_options[product_option.option_name.id][:option_values] << {
-              id: product_option.option_value_id,
-              value: product_option.option_value.value
+            id: product_option.option_value_id,
+            value: product_option.option_value.value
           }
           if product_option.option_name.is_characteristic
             dependent_options << {
@@ -91,19 +91,17 @@ class Product < ApplicationRecord
           }
         }
       end
-      product_options.each do |key, product_option|
+      product_options.each do |_key, product_option|
         product_option[:option_values] = product_option[:option_values].uniq
       end
       options = product_options.values
-      all << {
-        name: product.name,
-        id: product.id,
-        description: product.description,
-        subcategories: product.subcategories,
-        instances: instances,
-        options: options,
-        image_url: image_url
-      }
+      all << { name: product.name,
+               id: product.id,
+               description: product.description,
+               subcategories: product.subcategories.map { |s| { id: s.id, name: s.name } },
+               instances: instances,
+               options: options,
+               image_url: image_url }
     end
 
     all
