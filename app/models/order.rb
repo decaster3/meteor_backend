@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
+  def self.percent_rate
+    0.05
+  end
 
   after_initialize :set_default_status
   after_create :give_meteors
@@ -27,7 +30,7 @@ class Order < ApplicationRecord
   end
 
   def give_meteors
-    self.user.add_meteors(self.price * 0.05, "Начисление метеоров за заказ №" + id.to_s)
+    self.user.add_meteors(self.price * Order.percent_rate, "Начисление метеоров за заказ №" + id.to_s)
   end
 
 end
