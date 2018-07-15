@@ -76,7 +76,7 @@ class User < ApplicationRecord
     password = Digest::SHA1.hexdigest([Time.now, rand].join)[0..10]
     user = User.create!(name: name, phone: phone, password: password)
     print(user)
-    return user
+    user
   end
 
   def add_meteors(value, description = 'Add meteors')
@@ -85,6 +85,37 @@ class User < ApplicationRecord
 
   def subtract_meteors(value, description = 'Subtract meteors')
     add_meteors(-1 * value, description)
+  end
+
+  def self.all_info(user)
+    orders = user.orders.map do |order|
+      {
+          "id": order.id,
+          "payment_method": order.payment_method,
+          "status": order.status,
+          "order_products": order.order_products.map do |order_product|
+            {
+                "id": order_product.id,
+                "quantity": order_product.quantity,
+                "product": Product.form_product(
+                    order_product.product_instance.product,
+                    nil,
+                    order,
+                    order_product.product_instance.id
+                )
+            }
+          end
+      }
+    end
+    {
+        "id": user.id,
+        "name": user.name,
+        "token": user.token,
+        "phone": user.phone,
+        "role": user.role,
+        "meteors": user.meteors,
+        "orders": orders
+    }
   end
 
   private
