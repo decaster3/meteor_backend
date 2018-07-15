@@ -102,7 +102,8 @@ class User < ApplicationRecord
                     nil,
                     order,
                     order_product.product_instance.id
-                )
+                ),
+                "created_at": order.created_at
             }
           end
       }
