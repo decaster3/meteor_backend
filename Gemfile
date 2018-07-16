@@ -51,6 +51,7 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'file_validators'
+gem 'kazkom_epay'
 # required for translating from snake_case to camelCase and back
 gem 'olive_branch'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -60,5 +61,5 @@ gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
 gem 'seed_dump'
 
-gem "rubocop", "~> 0.57.2", :group => [:development]
-gem "rufo", "~> 0.3.1", :group => [:development]
+gem 'rubocop', '~> 0.57.2', group: [:development]
+gem 'rufo', '~> 0.3.1', group: [:development]

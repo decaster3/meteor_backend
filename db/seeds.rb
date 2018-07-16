@@ -123,4 +123,5 @@ ProductOption.create!([
                           {product_instance_id: 12, option_value_id: 17}
 
                       ])
-User.create!(name: "Rinat", phone: "+79991571024", password: "qwe")
+User.create!(name: "Rinat", phone: "+79991571024", password: "qweqweqwe")
+User.create!(name: "Rinat", phone: "+79999999999", password: "qweqweqwe")
