@@ -38,8 +38,8 @@ class User < ApplicationRecord
   validates :phone,
             presence: true,
             uniqueness: true,
-            format: {with: /\A(\+[0-9]+)\z/i},
-            length: {minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH}
+            format: { with: /\A(\+[0-9]+)\z/i },
+            length: { minimum: MIN_PHONE_LENGTH, maximum: MAX_PHONE_LENGTH }
 
   # attr_accessor :phone, :email
   # attr_accessor :confirmed_at
@@ -90,32 +90,32 @@ class User < ApplicationRecord
   def self.all_info(user)
     orders = user.orders.map do |order|
       {
-          "id": order.id,
-          "payment_method": order.payment_method,
-          "status": order.status,
-          "created_at": order.created_at,
-          "order_products": order.order_products.map do |order_product|
-            {
-                "id": order_product.id,
-                "quantity": order_product.quantity,
-                "product": Product.form_product(
-                    order_product.product_instance.product,
-                    nil,
-                    order,
-                    order_product.product_instance.id
-                ),
-            }
-          end,
+        "id": order.id,
+        "currency": order.city.currency,
+        "payment_method": order.payment_method,
+        "total": order.total,
+        "status": order.status,
+        "created_at": order.created_at,
+        "order_products": order.order_products.map do |order_product|
+                            product = Product.form_product(
+                                order_product.product_instance.product,
+                                nil,
+                                order,
+                                order_product.product_instance.id
+                            )
+                            product[:count] = order_product.quantity
+                            product
+                          end
       }
     end
     {
-        "id": user.id,
-        "name": user.name,
-        "token": user.token,
-        "phone": user.phone,
-        "role": user.role,
-        "meteors": user.meteors,
-        "orders": orders
+      "id": user.id,
+      "name": user.name,
+      "token": user.token,
+      "phone": user.phone,
+      "role": user.role,
+      "meteors": user.meteors,
+      "orders": orders
     }
   end
 

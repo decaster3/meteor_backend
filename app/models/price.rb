@@ -14,7 +14,7 @@ class Price < ApplicationRecord
     product = Product.find(product_instance.product_id)
     unless product.cities.exists?(city_id)
       errors.add(
-        :price,
+        :total,
         ": product_instance_id's product hasn't that city_id"
       )
     end

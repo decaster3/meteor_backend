@@ -17,7 +17,7 @@ class Order < ApplicationRecord
   has_and_belongs_to_many :promotions
   accepts_nested_attributes_for :order_products
 
-  def price
+  def total
     order_products.reduce(0) do |sum, op|
       sum + op.product_instance.price * op.quantity
     end
@@ -31,7 +31,7 @@ class Order < ApplicationRecord
 
   def give_meteors
     user.add_meteors(
-      price * Order.percent_rate,
+      (amount * Order.percent_rate).to_i,
       city,
       'Начисление метеоров за заказ №' + id.to_s
     )

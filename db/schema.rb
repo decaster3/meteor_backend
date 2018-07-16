@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
   end
 
   create_table "meteors", force: :cascade do |t|
-    t.float "value"
+    t.integer "value"
     t.string "description"
     t.bigint "user_id"
     t.datetime "created_at", null: false

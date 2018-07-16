@@ -74,10 +74,10 @@ class Product < ApplicationRecord
         end
       end
       instances << {
-        id: instance.id,
-        independent_options: independent_options,
-        dependent_options: dependent_options,
-        price: {
+          id: instance.id,
+          independent_options: independent_options,
+          dependent_options: dependent_options,
+          total: {
           value: price.value,
           currency: city.currency
         }
