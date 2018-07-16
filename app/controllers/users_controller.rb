@@ -24,9 +24,11 @@ class UsersController < ApplicationController
           :inviter,
           :meteors,
           orders: [
+            :city,
             order_products: [
               product_instance: [
                 product: [
+                  :subcategories,
                   product_instances: [
                     prices: [
                       :city
@@ -42,7 +44,7 @@ class UsersController < ApplicationController
         json_response(User.all_info(@user))
       else
         return render json: {
-            error: 'Unauthorized.'
+          error: 'Unauthorized.'
         }, status: 401
       end
     end

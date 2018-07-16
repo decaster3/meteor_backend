@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_14_134548) do
+ActiveRecord::Schema.define(version: 2018_07_16_184702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(version: 2018_07_14_134548) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_meteors_on_city_id"
     t.index ["user_id"], name: "index_meteors_on_user_id"
   end
 
@@ -221,6 +223,7 @@ ActiveRecord::Schema.define(version: 2018_07_14_134548) do
 
   add_foreign_key "addresses", "cities", on_delete: :nullify
   add_foreign_key "cities", "countries", on_delete: :cascade
+  add_foreign_key "meteors", "cities"
   add_foreign_key "option_names", "categories", on_delete: :cascade
   add_foreign_key "option_values", "option_names", on_delete: :cascade
   add_foreign_key "order_products", "orders", on_delete: :cascade

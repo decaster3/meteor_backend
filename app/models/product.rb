@@ -31,8 +31,7 @@ class Product < ApplicationRecord
   end
 
   def self.define_city_from_order(order)
-    city = order.address.city
-    city
+    order.city
   end
 
   def self.form_product(product, city = nil, order = nil, only = nil)

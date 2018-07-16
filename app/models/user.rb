@@ -79,8 +79,8 @@ class User < ApplicationRecord
     user
   end
 
-  def add_meteors(value, description = 'Add meteors')
-    meteors.create(value: value, description: description)
+  def add_meteors(value, city, description = 'Add meteors')
+    meteors.create(value: value, description: description, city_id: city.id)
   end
 
   def subtract_meteors(value, description = 'Subtract meteors')

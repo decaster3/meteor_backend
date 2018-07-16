@@ -12,6 +12,7 @@ class Order < ApplicationRecord
   enum status: %i[not_adopted adopted ready cancelled finished]
   belongs_to :address
   belongs_to :user
+  has_one :city, through: :address
   has_many :order_products
   has_and_belongs_to_many :promotions
   accepts_nested_attributes_for :order_products
@@ -22,7 +23,6 @@ class Order < ApplicationRecord
     end
   end
 
-
   private
 
   def set_default_status
@@ -30,7 +30,10 @@ class Order < ApplicationRecord
   end
 
   def give_meteors
-    self.user.add_meteors(self.price * Order.percent_rate, "Начисление метеоров за заказ №" + id.to_s)
+    user.add_meteors(
+      price * Order.percent_rate,
+      city,
+      'Начисление метеоров за заказ №' + id.to_s
+    )
   end
-
 end

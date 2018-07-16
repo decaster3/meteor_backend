@@ -8,4 +8,5 @@ class City < ApplicationRecord
   has_many :product_instances, through: :prices
   has_many :orders, through: :addresses
   has_many :addresses
+  has_many :meteors
 end
