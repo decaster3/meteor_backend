@@ -93,6 +93,7 @@ class User < ApplicationRecord
           "id": order.id,
           "payment_method": order.payment_method,
           "status": order.status,
+          "created_at": order.created_at,
           "order_products": order.order_products.map do |order_product|
             {
                 "id": order_product.id,
@@ -103,9 +104,8 @@ class User < ApplicationRecord
                     order,
                     order_product.product_instance.id
                 ),
-                "created_at": order.created_at
             }
-          end
+          end,
       }
     end
     {
