@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   after_create :give_meteors
 
   enum payment_method: %i[cash cashless]
-  enum status: %i[not_adopted adopted ready delivered paid finished]
+  enum status: %i[not_adopted adopted ready cancelled finished]
   belongs_to :address
   belongs_to :user
   has_many :order_products
