@@ -114,6 +114,12 @@ class User < ApplicationRecord
       "token": user.token,
       "phone": user.phone,
       "role": user.role,
+      "total_meteors": user.meteors.group(:city_id).sum(:value).map do |key, value|
+        {
+            "city_id": key,
+            "value": value
+        }
+      end,
       "meteors": user.meteors,
       "orders": orders
     }
