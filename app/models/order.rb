@@ -1,6 +1,9 @@
+require 'validators/order_validator'
 # frozen_string_literal: true
 
 class Order < ApplicationRecord
+  validates_with OrderValidator
+
   def self.percent_rate
     0.05
   end
