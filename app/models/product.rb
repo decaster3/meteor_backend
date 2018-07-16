@@ -3,10 +3,10 @@
 class Product < ApplicationRecord
   include ImageUrl
   validates :name, :description, presence: true
-  validates :is_topping, exclusion: { in: [nil] }
+  validates :is_topping, exclusion: {in: [nil]}
   validates :name, :description, uniqueness: true
-  validates :name, length: { minimum: 2 }
-  validates :description, length: { minimum: 10 }
+  validates :name, length: {minimum: 2}
+  validates :description, length: {minimum: 10}
 
   has_one_attached :image
   # validates :image, file_content_type: { allow: ['image/jpeg', 'image/png'] }
@@ -42,34 +42,34 @@ class Product < ApplicationRecord
     instances = []
     product.product_instances.each do |instance|
       next if not only.nil? and instance.id != only
-      price = instance.prices.select { |p| p.city_id == city.id }[0]
+      price = instance.prices.select {|p| p.city_id == city.id}[0]
       independent_options = []
       dependent_options = []
       instance.product_options.each do |product_option|
         unless product_options[product_option.option_name.id]
           product_options[product_option.option_name.id] = {
-            id: product_option.option_name.id,
-            name: product_option.option_name.name,
-            is_characteristic: product_option.option_name.is_characteristic,
-            option_values: []
+              id: product_option.option_name.id,
+              name: product_option.option_name.name,
+              is_characteristic: product_option.option_name.is_characteristic,
+              option_values: []
           }
         end
 
         product_options[product_option.option_name.id][:option_values] << {
-          id: product_option.option_value_id,
-          value: product_option.option_value.value
+            id: product_option.option_value_id,
+            value: product_option.option_value.value
         }
         if product_option.option_name.is_characteristic
           dependent_options << {
-            value_id: product_option.option_value_id,
-            value: product_option.option_value.value,
-            option_id: product_option.option_name.id
+              value_id: product_option.option_value_id,
+              value: product_option.option_value.value,
+              option_id: product_option.option_name.id
           }
         else
           independent_options << {
-            value_id: product_option.option_value_id,
-            value: product_option.option_value.value,
-            option_id: product_option.option_name.id
+              value_id: product_option.option_value_id,
+              value: product_option.option_value.value,
+              option_id: product_option.option_name.id
           }
         end
       end
@@ -77,10 +77,10 @@ class Product < ApplicationRecord
           id: instance.id,
           independent_options: independent_options,
           dependent_options: dependent_options,
-          total: {
-          value: price.value,
-          currency: city.currency
-        }
+          price: {
+              value: price.value,
+              currency: city.currency
+          }
       }
     end
     product_options.each do |_key, product_option|
@@ -88,27 +88,27 @@ class Product < ApplicationRecord
     end
     options = product_options.values
     {
-      name: product.name,
-      id: product.id,
-      description: product.description,
-      subcategories: product.subcategories.map { |s| { id: s.id, name: s.name } },
-      instances: instances,
-      options: options,
-      image_url: image_url
+        name: product.name,
+        id: product.id,
+        description: product.description,
+        subcategories: product.subcategories.map {|s| {id: s.id, name: s.name}},
+        instances: instances,
+        options: options,
+        image_url: image_url
     }
   end
 
   def self.all_attributes(city, category_id)
     all = []
     products = city.products.with_attached_image.includes(
-      subcategories: [],
-      product_instances: [
-        :prices,
-        product_options: %i[
+        subcategories: [],
+        product_instances: [
+            :prices,
+            product_options: %i[
           option_value
           option_name
         ]
-      ]
+        ]
     ).where(category_id: category_id)
     products.each do |product|
       all << form_product(product, city = city)
