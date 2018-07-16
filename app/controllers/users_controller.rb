@@ -40,6 +40,10 @@ class UsersController < ApplicationController
         ).find(current_user.id)
 
         json_response(User.all_info(@user))
+      else
+        return render json: {
+            error: 'Unauthorized.'
+        }, status: 401
       end
     end
   end
