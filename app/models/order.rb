@@ -3,13 +3,14 @@ require 'validators/order_validator'
 
 class Order < ApplicationRecord
   validates_with OrderValidator
+  before_update :update_meteors
 
   def self.percent_rate
     0.05
   end
 
   after_initialize :set_default_status
-  after_create :give_meteors
+  # after_create :give_meteors
 
   enum payment_method: %i[cash cashless]
   enum status: %i[not_adopted adopted ready cancelled finished]
@@ -28,15 +29,30 @@ class Order < ApplicationRecord
 
   private
 
+  def update_meteors
+    if self.status_was != "finished" and self.status == "finished"
+      give_meteors
+      subtract_meteors
+    end
+  end
+
   def set_default_status
     self.status = :not_adopted
   end
 
   def give_meteors
-    user.add_meteors(
+    user.give_meteors(
       (amount * Order.percent_rate).to_i,
       city,
       'Начисление метеоров за заказ №' + id.to_s
+    )
+  end
+
+  def subtract_meteors
+    user.subtract_meteors(
+        meteors,
+        city,
+        'Списание метеоров за заказ №' + id.to_s
     )
   end
 end

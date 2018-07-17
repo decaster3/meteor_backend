@@ -79,12 +79,17 @@ class User < ApplicationRecord
     user
   end
 
+  def give_meteors(value, city, description = 'Add meteors')
+    add_meteors(value, city, description)
+    inviter&.add_meteors((value * 0.5).to_i, city, "Add meteors for referal order (#{name})")
+  end
+
   def add_meteors(value, city, description = 'Add meteors')
     meteors.create(value: value, description: description, city_id: city.id)
   end
 
-  def subtract_meteors(value, description = 'Subtract meteors')
-    add_meteors(-1 * value, description)
+  def subtract_meteors(value, city, description = 'Subtract meteors')
+    add_meteors(-1 * value, city, description) if value != 0
   end
 
   def self.all_info(user)
@@ -100,10 +105,10 @@ class User < ApplicationRecord
         "created_at": order.created_at,
         "order_products": order.order_products.map do |order_product|
                             product = Product.form_product(
-                                order_product.product_instance.product,
-                                nil,
-                                order,
-                                order_product.product_instance.id
+                              order_product.product_instance.product,
+                              nil,
+                              order,
+                              order_product.product_instance.id
                             )
                             product[:count] = order_product.quantity
                             product
@@ -117,11 +122,11 @@ class User < ApplicationRecord
       "phone": user.phone,
       "role": user.role,
       "total_meteors": user.meteors.group(:city_id).sum(:value).map do |key, value|
-        {
-            "city_id": key,
-            "value": value
-        }
-      end,
+                         {
+                           "city_id": key,
+                           "value": value
+                         }
+                       end,
       "meteors": user.meteors,
       "orders": orders
     }

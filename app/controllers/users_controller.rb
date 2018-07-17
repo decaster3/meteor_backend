@@ -27,6 +27,7 @@ class UsersController < ApplicationController
             :city,
             order_products: [
               product_instance: [
+                :prices,
                 product: [
                   :subcategories,
                   product_instances: [

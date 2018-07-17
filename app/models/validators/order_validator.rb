@@ -13,10 +13,6 @@ class OrderValidator < ActiveModel::Validator
 
   def user_have_enough_meteors(record)
     meteors = record.user.meteors.group(:city_id).sum(:value)[record.city.id] || 0
-    puts "meteors"
-    puts meteors
-    puts record.meteors
-    puts "meteors"
     if record.meteors > meteors
       record.errors[:base] <<
           "Does not have enough meteors(#{meteors}, #{record.meteors})"

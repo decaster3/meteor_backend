@@ -124,4 +124,7 @@ ProductOption.create!([
 
                       ])
 User.create!(name: "Rinat", phone: "+79991571024", password: "qweqweqwe")
-User.create!(name: "Rinat", phone: "+79999999999", password: "qweqweqwe")
+u = User.create!(name: "Rinat", phone: "+79999999999", password: "qweqweqwe")
+u.inviter = User.first
+u.save
+
