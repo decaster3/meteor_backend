@@ -94,6 +94,8 @@ class User < ApplicationRecord
         "currency": order.city.currency,
         "payment_method": order.payment_method,
         "total": order.total,
+        "meteors": order.meteors,
+        "amount": order.amount,
         "status": order.status,
         "created_at": order.created_at,
         "order_products": order.order_products.map do |order_product|
