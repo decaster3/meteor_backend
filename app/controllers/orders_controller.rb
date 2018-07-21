@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
+
+  include Orderable
+
   before_action :set_order, only: %i[show update destroy]
 
   # GET /orders
   def index
-    @orders = Order.all
+    index_logic
 
     render json: @orders
   end
@@ -17,24 +20,7 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    # params[:order][:user_id] = current_user.id if current_user
-    if params[:user][:phone] && params[:user][:name]
-      if u = User.find_by_phone(params[:user][:phone])
-        params[:order][:user_id] = u.id
-      else
-        def_user = User.create_default(
-            params[:user][:phone],
-            params[:user][:name]
-        )
-        params[:order][:user_id] = def_user.id
-      end
-    end
-    unless params[:address].nil?
-      address = Address.create!(address_params)
-      params[:order][:address_id] = address.id
-    end
-    order_params_instance = order_params
-    @order = Order.create!(order_params_instance)
+    create_logic
     json_response @order, :created
   end
 
@@ -65,6 +51,7 @@ class OrdersController < ApplicationController
         :amount,
         :payment_method,
         :status,
+        :delivery_time,
         :address_id,
         :user_id,
         order_products_attributes: %i[quantity product_instance_id]

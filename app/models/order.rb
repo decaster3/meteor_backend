@@ -9,7 +9,7 @@ class Order < ApplicationRecord
     0.05
   end
 
-  after_initialize :set_default_status
+  after_initialize :set_default_status, :set_default_delivery_time
   # after_create :give_meteors
 
   enum payment_method: %i[cash cashless]
@@ -30,7 +30,7 @@ class Order < ApplicationRecord
   private
 
   def update_meteors
-    if self.status_was != "finished" and self.status == "finished"
+    if (status_was != 'finished') && (status == 'finished')
       give_meteors
       subtract_meteors
     end
@@ -40,11 +40,15 @@ class Order < ApplicationRecord
     self.status = :not_adopted
   end
 
+  def set_default_delivery_time
+    self.delivery_time = delivery_time.nil? ? Time.now : delivery_time
+  end
+
   def give_meteors
     user.give_meteors(
-      (amount * Order.percent_rate).to_i,
-      city,
-      'Начисление метеоров за заказ №' + id.to_s
+        (amount * Order.percent_rate).to_i,
+        city,
+        'Начисление метеоров за заказ №' + id.to_s
     )
   end
 

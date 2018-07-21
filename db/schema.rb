@@ -125,10 +125,11 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
     t.float "amount"
     t.integer "meteors"
     t.bigint "address_id"
+    t.datetime "delivery_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.boolean "viewed"
+    t.boolean "viewed", default: false, null: false
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -150,8 +151,10 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
 
   create_table "product_instances", force: :cascade do |t|
     t.bigint "product_id"
+    t.string "external_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_product_instances_on_external_id", unique: true
     t.index ["product_id"], name: "index_product_instances_on_product_id"
   end
 

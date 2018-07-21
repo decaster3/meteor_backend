@@ -18,4 +18,11 @@ class OrderValidator < ActiveModel::Validator
           "Does not have enough meteors(#{meteors}, #{record.meteors})"
     end
   end
+
+  def delivery_time_future_time(record)
+    if record.delivery_time > Time.now
+      record.errors[:base] <<
+          "Impossible to send order to the past"
+    end
+  end
 end
