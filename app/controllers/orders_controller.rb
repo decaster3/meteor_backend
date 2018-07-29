@@ -14,8 +14,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
-    Order.includes(:user)
-    Order.includes(:order_products)
     @order = Order.includes(
       :user,
       address: [
@@ -26,7 +24,7 @@ class OrdersController < ApplicationController
           :product
         ]
       ]
-    )
+    ).find(params[:id])
     json_order = {
       id: @order.id,
       status: @order.status,
@@ -49,7 +47,19 @@ class OrdersController < ApplicationController
         id: @order.user.id,
         name: @order.user.name,
         phone: @order.user.phone
-      }
+      },
+      products: @order.order_products.each.map do |op|
+        [
+            op.product_instance.barcode, op.quantity, op.product_instance.price
+        ]
+        # {
+        #     id: op.product_instance.id,
+        #     name: op.product_instance.product.name,
+        #     barcode: op.product_instance.barcode,
+        #     price: op.product_instance.price,
+        #     amount: op.quantity,
+        # }
+      end
     }
     json_response(json_order)
   end

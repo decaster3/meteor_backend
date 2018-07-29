@@ -151,10 +151,10 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
 
   create_table "product_instances", force: :cascade do |t|
     t.bigint "product_id"
-    t.string "external_id", null: false
+    t.string "barcode", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["external_id"], name: "index_product_instances_on_external_id", unique: true
+    t.index ["barcode"], name: "index_product_instances_on_barcode", unique: true
     t.index ["product_id"], name: "index_product_instances_on_product_id"
   end
 

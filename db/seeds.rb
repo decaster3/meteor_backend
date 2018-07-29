@@ -29,18 +29,18 @@ Product.create!([
                 ])
 Product.first.subcategories << Subcategory.first
 ProductInstance.create!([
-                          { product_id: 1, external_id: '001' },
-                          { product_id: 1, external_id: '002' },
-                          { product_id: 1, external_id: '003' },
-                          { product_id: 1, external_id: '004' },
-                          { product_id: 1, external_id: '005' },
-                          { product_id: 1, external_id: '006' },
-                          { product_id: 2, external_id: '007' },
-                          { product_id: 2, external_id: '008' },
-                          { product_id: 2, external_id: '009' },
-                          { product_id: 2, external_id: '010' },
-                          { product_id: 2, external_id: '011' },
-                          { product_id: 2, external_id: '012' }
+                          { product_id: 1, barcode: '001' },
+                          { product_id: 1, barcode: '002' },
+                          { product_id: 1, barcode: '003' },
+                          { product_id: 1, barcode: '004' },
+                          { product_id: 1, barcode: '005' },
+                          { product_id: 1, barcode: '006' },
+                          { product_id: 2, barcode: '007' },
+                          { product_id: 2, barcode: '008' },
+                          { product_id: 2, barcode: '009' },
+                          { product_id: 2, barcode: '010' },
+                          { product_id: 2, barcode: '011' },
+                          { product_id: 2, barcode: '012' }
                         ])
 OptionValue.create!([
                       { value: '28 см', option_name_id: 1 },
