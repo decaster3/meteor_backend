@@ -14,53 +14,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
-    @order = Order.includes(
-      :user,
-      address: [
-        :city
-      ],
-      order_products: [
-        product_instance: [
-          :product
-        ]
-      ]
-    ).find(params[:id])
-    json_order = {
-      id: @order.id,
-      status: @order.status,
-      payment_method: @order.payment_method,
-      created_at: @order.created_at,
-      updated_at: @order.updated_at,
-      delivery_time: @order.delivery_time,
-      amount: @order.amount,
-      meteors: @order.meteors,
-      discount: (@order.amount / @order.total),
-      comment: @order.address.comment,
-      address: {
-        id: @order.address.id,
-        street: @order.address.street,
-        building: @order.address.building,
-        apartment: @order.address.apartment,
-        city: @order.address.city.name
-      },
-      user: {
-        id: @order.user.id,
-        name: @order.user.name,
-        phone: @order.user.phone
-      },
-      products: @order.order_products.each.map do |op|
-        [
-            op.product_instance.barcode, op.quantity, op.product_instance.price
-        ]
-        # {
-        #     id: op.product_instance.id,
-        #     name: op.product_instance.product.name,
-        #     barcode: op.product_instance.barcode,
-        #     price: op.product_instance.price,
-        #     amount: op.quantity,
-        # }
-      end
-    }
+    show_logic
     json_response(json_order)
   end
 
@@ -75,7 +29,7 @@ class OrdersController < ApplicationController
     if @order.status == 'finished'
       return render json: { error: 'Not allowed to edit finished order.' }, status: 405
     end
-    render json: @order if @order.update(order_params)
+    render json: @order if @order.update!(order_params)
   end
 
   # DELETE /orders/1

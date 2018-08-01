@@ -3,12 +3,78 @@
 module Orderable
   extend ActiveSupport::Concern
 
+  def show_logic
+    @order = Order.includes(
+      :user,
+      address: [
+        :city
+      ],
+      order_products: [
+        product_instance: [
+          :product
+        ]
+      ]
+    ).find(params[:id])
+    @order = {
+      id: @order.id,
+      status: @order.status,
+      payment_method: @order.payment_method,
+      created_at: @order.created_at,
+      updated_at: @order.updated_at,
+      delivery_time: @order.delivery_time,
+      amount: @order.amount,
+      meteors: @order.meteors,
+      discount: (@order.amount / @order.total),
+      comment: @order.address.comment,
+      address: {
+        id: @order.address.id,
+        street: @order.address.street,
+        building: @order.address.building,
+        apartment: @order.address.apartment,
+        city: @order.address.city.name
+      },
+      user: {
+        id: @order.user.id,
+        name: @order.user.name,
+        phone: @order.user.phone
+      },
+      products: @order.order_products.each.map do |op|
+                  [
+                    op.product_instance.barcode, op.quantity, op.product_instance.price
+                  ]
+                end
+    }
+  end
+
   def index_logic
-    @orders = if params[:not_adopted].nil?
-                Order.all
-              else
-                Order.where(status: 'not_adopted')
-              end
+    order_models = if params[:not_adopted].nil?
+                     Order.includes(
+                       :user,
+                       address: [
+                         :city
+                       ],
+                       order_products: [
+                         product_instance: [
+                           :product
+                         ]
+                       ]
+                     ).all
+                   else
+                     Order.includes(
+                       :user,
+                       address: [
+                         :city
+                       ],
+                       order_products: [
+                         product_instance: [
+                           :product
+                         ]
+                       ]
+                     ).where(status: 'not_adopted')
+                   end
+    @orders = order_models.map do |om|
+      construct_order(om)
+    end
   end
 
   def create_logic
@@ -33,5 +99,37 @@ module Orderable
     end
     order_params_instance = order_params
     @order = Order.create!(order_params_instance)
+  end
+
+  def construct_order(order)
+    order = {
+      id: order.id,
+      status: order.status,
+      payment_method: order.payment_method,
+      created_at: order.created_at,
+      updated_at: order.updated_at,
+      delivery_time: order.delivery_time,
+      amount: order.amount,
+      meteors: order.meteors,
+      discount: (order.amount / order.total),
+      comment: order.address.comment,
+      address: {
+        id: order.address.id,
+        street: order.address.street,
+        building: order.address.building,
+        apartment: order.address.apartment,
+        city: order.address.city.name
+      },
+      user: {
+        id: order.user.id,
+        name: order.user.name,
+        phone: order.user.phone
+      },
+      products: order.order_products.each.map do |op|
+                  [
+                    op.product_instance.barcode, op.quantity, op.product_instance.price
+                  ]
+                end
+    }
   end
 end
