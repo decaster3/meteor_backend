@@ -47,19 +47,7 @@ module Orderable
   end
 
   def index_logic
-    order_models = if params[:not_adopted].nil?
-                     Order.includes(
-                       :user,
-                       address: [
-                         :city
-                       ],
-                       order_products: [
-                         product_instance: [
-                           :product
-                         ]
-                       ]
-                     ).all
-                   else
+    order_models = if params.key?(:not_adopted)
                      Order.includes(
                        :user,
                        address: [
@@ -71,6 +59,18 @@ module Orderable
                          ]
                        ]
                      ).where(status: 'not_adopted')
+                   else
+                     Order.includes(
+                       :user,
+                       address: [
+                         :city
+                       ],
+                       order_products: [
+                         product_instance: [
+                           :product
+                         ]
+                       ]
+                     ).all
                    end
     @orders = order_models.map do |om|
       construct_order(om)
@@ -102,9 +102,9 @@ module Orderable
   end
 
   def construct_order(order)
-    order = {
+    {
       id: order.id,
-      status: order.status,
+      status: order[:status],
       payment_method: order.payment_method,
       created_at: order.created_at,
       updated_at: order.updated_at,

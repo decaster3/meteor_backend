@@ -9,7 +9,7 @@ class Order < ApplicationRecord
     0.05
   end
 
-  after_initialize :set_default_status, :set_default_delivery_time
+  after_initialize :set_default_status, :set_default_delivery_time, if: :new_record?
   # after_create :give_meteors
 
   enum payment_method: %i[cash cashless]
