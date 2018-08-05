@@ -22,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
     resource = User.find_by(phone: params[:user][:phone])
-    if resource&.confirmed?
+    if resource && !resource.confirmed?
       return render json: {error: 'Already registered.'}, status: 405
     end
     if resource&.possible_to_send_sms?
