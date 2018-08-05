@@ -79,7 +79,7 @@ class Product < ApplicationRecord
         independent_options: independent_options,
         dependent_options: dependent_options,
         price: {
-          value: price,
+          value: price.value,
           currency: city.currency
         }
       }
