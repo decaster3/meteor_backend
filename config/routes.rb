@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/pay', to: 'pay#epay'
   resources :promotions
   resources :orders
 
