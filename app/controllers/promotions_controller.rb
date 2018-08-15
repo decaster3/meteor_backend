@@ -17,21 +17,20 @@ class PromotionsController < ApplicationController
   # POST /promotions.json
   def create
     @promotion = Promotion.new(promotion_params)
-
     if @promotion.save
-      render :show, status: :created, location: @promotion
-    else
-      render json: @promotion.errors, status: :unprocessable_entity
+      json_response @promotion, :created
     end
   end
 
   # PATCH/PUT /promotions/1
   # PATCH/PUT /promotions/1.json
   def update
-    if @promotion.update(promotion_params)
-      render :show, status: :ok, location: @promotion
+    if params[:image]
+      @promotion.image.attach(params[:image])
+      json_response @promotion
     else
-      render json: @promotion.errors, status: :unprocessable_entity
+      @promotion.update(product_params)
+      json_response @promotion
     end
   end
 
@@ -50,6 +49,6 @@ class PromotionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def promotion_params
-    params.require(:promotion).permit(:city_id, :price)
+    params.require(:promotion).permit(:city_id)
   end
 end

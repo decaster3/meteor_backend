@@ -134,11 +134,6 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "orders_promotions", id: false, force: :cascade do |t|
-    t.bigint "promotion_id", null: false
-    t.bigint "order_id", null: false
-  end
-
   create_table "prices", force: :cascade do |t|
     t.float "value"
     t.bigint "city_id"
@@ -156,11 +151,6 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
     t.datetime "updated_at", null: false
     t.index ["barcode"], name: "index_product_instances_on_barcode", unique: true
     t.index ["product_id"], name: "index_product_instances_on_product_id"
-  end
-
-  create_table "product_instances_promotions", id: false, force: :cascade do |t|
-    t.bigint "promotion_id", null: false
-    t.bigint "product_instance_id", null: false
   end
 
   create_table "product_options", force: :cascade do |t|
@@ -189,7 +179,6 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
 
   create_table "promotions", force: :cascade do |t|
     t.bigint "city_id"
-    t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_promotions_on_city_id"
