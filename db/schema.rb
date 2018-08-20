@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(version: 2018_07_16_184702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.boolean "viewed", default: false, null: false
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

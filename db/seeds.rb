@@ -113,18 +113,18 @@ Product.create!([
                 ])
 Product.first.subcategories << Subcategory.first
 ProductInstance.create!([
-                            {product_id: 1, barcode: '001'},
-                            {product_id: 1, barcode: '002'},
-                            {product_id: 1, barcode: '003'},
-                            {product_id: 1, barcode: '004'},
-                            {product_id: 1, barcode: '005'},
-                            {product_id: 1, barcode: '006'},
-                            {product_id: 2, barcode: '007'},
-                            {product_id: 2, barcode: '008'},
-                            {product_id: 2, barcode: '009'},
-                            {product_id: 2, barcode: '010'},
-                            {product_id: 2, barcode: '011'},
-                            {product_id: 2, barcode: '012'}
+                            {product_id: 1, barcode: '2100000000272'},
+                            {product_id: 1, barcode: '2100000000258'},
+                            {product_id: 1, barcode: '2100000000241'},
+                            {product_id: 1, barcode: '2100000000265'},
+                            {product_id: 1, barcode: '2100000000289'},
+                            {product_id: 1, barcode: '2100000000296'},
+                            {product_id: 2, barcode: '2100000000302'},
+                            {product_id: 2, barcode: '2100000000319'},
+                            {product_id: 2, barcode: '2100000000326'},
+                            {product_id: 2, barcode: '2100000000333'},
+                            {product_id: 2, barcode: '2100000000340'},
+                            {product_id: 2, barcode: '2100000000357'}
                         ])
 OptionValue.create!([
                         {value: '28 см', option_name_id: 1},
@@ -211,3 +211,12 @@ User.create!(name: 'Rinat', phone: '+79991571024', password: 'qweqweqwe')
 u = User.create!(name: 'Rinat', phone: '+79999999999', password: 'qweqweqwe')
 u.inviter = User.first
 u.save
+Address.create!([{street: "АЙТИЕВА", building: "28", apartment: "64", comment: "домофон есть", city_id: 1}])
+o = Order.new(payment_method: "cash", status: "not_adopted", amount: 855.0, meteors: 0, address_id: 1, delivery_time: "2018-03-27 00:23:42", user_id: 2)
+o.save!(validate: false)
+OrderProduct.create!([{quantity: 1, product_instance_id: 1, order_id: 1}, {quantity: 3, product_instance_id: 2, order_id: 1},])
+
+Address.create!([{street: "БАЛЬЗАКА", building: "15", apartment: "20", comment: "домофон есть", city_id: 1}])
+o = Order.new(payment_method: "cash", status: "not_adopted", amount: 855.0, meteors: 0, address_id: 2, delivery_time: "2018-03-27 00:23:42", user_id: 2)
+o.save!(validate: false)
+OrderProduct.create!([{quantity: 1, product_instance_id: 1, order_id: 2}, {quantity: 3, product_instance_id: 2, order_id: 2},])
