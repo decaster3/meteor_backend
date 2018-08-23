@@ -99,7 +99,8 @@ Category.create!([
                      {name: 'Бургеры'},
                      {name: 'Суши'},
                      {name: 'Закуски'},
-                     {name: 'Напитки'}
+                     {name: 'Напитки'},
+                     {name: "Сеты"}
                  ])
 Subcategory.create!(name: 'ololo', category_id: 1)
 OptionName.create!([
