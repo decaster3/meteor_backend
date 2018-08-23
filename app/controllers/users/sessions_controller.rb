@@ -21,7 +21,7 @@ class Users::SessionsController < Devise::SessionsController
     if resource.nil?
       render json: {
         error: 'User not found'
-      }, status: 410
+      }, status: 401
     else
       render json: {
           name: current_user.name,
