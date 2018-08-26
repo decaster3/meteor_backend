@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def order_params
-    params[:delivery_time] = Time.now unless params[:delivery_time]
+    # params[:delivery_time] = Time.now unless params[:delivery_time]
     params.require(:order).permit(
       :meteors,
       :amount,

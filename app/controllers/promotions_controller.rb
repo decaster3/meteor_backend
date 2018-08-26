@@ -6,7 +6,9 @@ class PromotionsController < ApplicationController
   # GET /promotions
   # GET /promotions.json
   def index
-    @promotions = Promotion.all
+    city = City.find(params[:city_id])
+    @promotions = Promotion.all_attributes(city)
+    json_response @promotions
   end
 
   # GET /promotions/1
@@ -49,6 +51,10 @@ class PromotionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def promotion_params
-    params.require(:promotion).permit(:city_id)
+    params.require(:promotion).permit(
+        :city_id,
+        :description,
+        :name,
+    )
   end
 end
