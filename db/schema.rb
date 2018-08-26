@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_211534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
+    t.string "name"
     t.index ["city_id"], name: "index_promotions_on_city_id"
   end
 
