@@ -3,8 +3,9 @@ require 'validators/order_validator'
 
 class Order < ApplicationRecord
   validates_with OrderValidator
-  before_update :update_meteors
-
+  # TODO Change back here and in :update_meteors method
+  # before_update :update_meteors
+  after_initialize :update_meteors, if: :new_record?
   def self.percent_rate
     0.05
   end
@@ -30,10 +31,10 @@ class Order < ApplicationRecord
   private
 
   def update_meteors
-    if (status_was != 'finished') && (status == 'finished')
-      give_meteors
-      subtract_meteors
-    end
+    # if (status_was != 'finished') && (status == 'finished')
+    give_meteors
+    subtract_meteors
+    # end
   end
 
   def set_default_status

@@ -23,7 +23,8 @@ class Promotion < ApplicationRecord
         id: promotion.id,
         city_id: promotion.city_id,
         image_url: image_url,
-        description: promotion.description
+        description: promotion.description,
+        name: promotion.name
     }
   end
 end

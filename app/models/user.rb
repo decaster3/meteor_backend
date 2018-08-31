@@ -81,7 +81,10 @@ class User < ApplicationRecord
 
   def give_meteors(value, city, description = 'Add meteors')
     add_meteors(value, city, description)
-    inviter&.add_meteors((value * 0.5).to_i, city, "Add meteors for referal order (#{name})")
+    if orders.length < 2
+      inviter&.add_meteors(50, city, "Начисление метеоров за приглашение участника #{name}")
+    end
+    inviter&.add_meteors((value * 0.5).to_i, city, "Начисление метеоров за зыказ, выполненный #{name}")
   end
 
   def add_meteors(value, city, description = 'Add meteors')
@@ -146,7 +149,7 @@ class User < ApplicationRecord
     code = gen_code
     self.confirmation_code = code
     self.confirmation_sent_at = Time.now
-    ## Send sms logic goes here
+    ## TODO Send sms logic goes here
   end
 
   def gen_code

@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   def show
     show_logic
-    json_response(json_order)
+    json_response(@order)
   end
 
   # POST /orders
