@@ -26,12 +26,10 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1
   def update
-    puts request.headers.each {|key, value| print(key, ": ", value, "\n")}
-    puts(params)
     if @order.status == 'finished'
       return render json: { error: 'Not allowed to edit finished order.' }, status: 405
     end
-    render json: @order if @order.update!({status: params[:status]})
+    render json: @order if @order.update!(order_params)
   end
 
   # DELETE /orders/1
