@@ -26,6 +26,10 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1
   def update
+    puts request
+    puts request.headers
+    puts request.env
+    puts(params)
     if @order.status == 'finished'
       return render json: { error: 'Not allowed to edit finished order.' }, status: 405
     end
