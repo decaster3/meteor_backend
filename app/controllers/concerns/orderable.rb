@@ -39,9 +39,11 @@ module Orderable
         phone: @order.user.phone
       },
       products: @order.order_products.each.map do |op|
-                  [
-                    op.product_instance.barcode, op.quantity, op.product_instance.price
-                  ]
+                  {
+                    barcode: op.product_instance.barcode,
+                    quantity: op.quantity,
+                    price: op.product_instance.price,
+                  }
                 end
     }
   end
