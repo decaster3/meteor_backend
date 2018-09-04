@@ -1,12 +1,35 @@
 version: "3.7"
 
 services:
+  webserver:
+    build:
+      context: .
+      dockerfile: rails.dockerfile
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@dbnet:5432/meteor_backend_production
+    command: ["rails", "s"]
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    networks:
+      - dbnet
+  db:
+    image: postgres:10.5-alpine
+    networks:
+      - dbnet
+    expose:
+      - "5432"
   front:
     build:
       context: .
-      dockerfile: ./front.dockerfile
-    volumes:
-      - front-volume:/locmerge-frontend
+      dockerfile: front.dockerfile
+    # volumes:
+    #   - front-volume:/locmerge-frontend
 
-volumes:
-  ? front-volume
+networks:
+  ? dbnet
+
+# volumes:
+#   ? front-volume
