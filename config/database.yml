@@ -72,7 +72,7 @@ test:
 #
 production:
   <<: *default
-  url: meteor_backend_production
+  url: <%= ENV['DATABASE_URL'] %>
 
 #production:
 #  <<: *default

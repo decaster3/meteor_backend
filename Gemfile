@@ -49,7 +49,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Custom
 gem 'devise'
 gem 'devise-jwt'
-gem 'dotenv-rails', groups: %i[development test]
+gem 'dotenv-rails'
 gem 'file_validators'
 gem 'kazkom_epay'
 # required for translating from snake_case to camelCase and back
@@ -59,7 +59,8 @@ gem 'olive_branch'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
-gem 'seed_dump'
+gem 'seed_dump', groups: %i[development test]
 
 gem 'rubocop', '~> 0.57.2', group: [:development]
 gem 'rufo', '~> 0.3.1', group: [:development]
+gem 'foreman'
