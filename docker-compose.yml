@@ -1,26 +1,20 @@
 version: "3.7"
+volumes:
+  postgres_data: {}
 
 services:
-  webserver:
+  app:
     build:
       context: .
       dockerfile: rails.dockerfile
-    environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgresql://postgres:postgres@dbnet:5432/meteor_backend_production
-    command: ["rails", "s"]
-    ports:
-      - "3001:3001"
     depends_on:
       - db
-    networks:
-      - dbnet
+    ports:
+      - 3001:3001
   db:
-    image: postgres:10.5-alpine
-    networks:
-      - dbnet
-    expose:
-      - "5432"
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   front:
     build:
       context: .
