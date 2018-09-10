@@ -1,6 +1,6 @@
 #! /bin/sh
 ssh root@meteorfood.com << EOF
                             cd /var/www/meteor;
-                            git pull
-                            ./restart
+                            git pull;
+                            ./restart;
                           EOF
