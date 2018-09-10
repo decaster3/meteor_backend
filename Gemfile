@@ -63,4 +63,3 @@ gem 'seed_dump', groups: %i[development test]
 
 gem 'rubocop', '~> 0.57.2', group: [:development]
 gem 'rufo', '~> 0.3.1', group: [:development]
-gem 'foreman'
