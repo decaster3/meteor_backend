@@ -1,5 +1,4 @@
 FROM node:10
-RUN apk add --update --no-cache bash git openssh
 ADD ssh/repo-key /
 RUN \
   chmod 600 /repo-key && \
