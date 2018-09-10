@@ -1,4 +1,4 @@
-FROM node:10.10-alpine
+FROM node:10
 RUN apk add --update --no-cache bash git openssh
 ADD ssh/repo-key /
 RUN \

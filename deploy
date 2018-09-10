@@ -1,4 +1,5 @@
 #! /bin/sh
+echo "Connecting to meteorfood.com"
 ssh root@meteorfood.com << EOF
                             cd /var/www/meteor;
                             echo "Starting";
