@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: rails.dockerfile
+    env_file:
+      - .env
     depends_on:
       - db
     restart: always
