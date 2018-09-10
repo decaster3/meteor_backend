@@ -1,4 +1,5 @@
 #! /bin/sh
-docker-compose up --build -d
+docker-compose build api
+docker-compose build --no-cache front
 docker-compose down
 ./start
