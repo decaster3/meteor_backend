@@ -1,0 +1,3 @@
+#! /bin/sh
+docker-compose up -d
+docker-compose run api rails db:create db:migrate
