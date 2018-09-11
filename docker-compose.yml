@@ -29,6 +29,7 @@ services:
       - ./certificate:/etc/certificate/meteorfood.com
     ports:
       - "8000:8000"
+      - "443:443"
       - "80:80"
     depends_on:
       - api
