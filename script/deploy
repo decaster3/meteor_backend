@@ -1,11 +1,10 @@
 #! /bin/sh
 echo "Connecting to meteorfood.com"
-ssh meteor@meteorfood.com << EOF
-                            cd /var/www/meteor;
-                            echo "Starting";
-                            git reset --hard origin/master;
-                            echo "Pulled";
-                            ./script/restart;
-                            echo "Restarted";
-
-                          EOF
+ssh meteor@meteorfood.com -p 922 << EOF
+                                    cd /var/www/meteor;
+                                    echo "Starting";
+                                    git reset --hard origin/master;
+                                    echo "Pulled";
+                                    ./script/restart;
+                                    echo "Restarted";
+                                    EOF
