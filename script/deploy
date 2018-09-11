@@ -5,7 +5,7 @@ ssh root@meteorfood.com << EOF
                             echo "Starting";
                             git pull;
                             echo "Pulled";
-                            ./restart;
+                            ./script/restart;
                             echo "Restarted";
 
                           EOF

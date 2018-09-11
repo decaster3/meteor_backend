@@ -2,4 +2,4 @@
 docker-compose build api
 docker-compose build front
 docker-compose down -v
-./start
+./script/start
