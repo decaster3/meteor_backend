@@ -5,6 +5,7 @@ printf "${grn}Connecting to meteorfood.com\n${end}"
 ssh meteor@meteorfood.com -p 922 << EOF
                                     cd /var/www/meteor;
                                     printf "${grn}++++++++\nStarting\n++++++++\n${end}";
+                                    git reset --hard origin/master
                                     git pull --force;
                                     printf "${grn}++++++++\nPulled\n++++++++${end}\n";
                                     ./script/restart;
