@@ -5,7 +5,7 @@ if [ -f $deployerfile ]; then
     echo "$(cat $deployerfile) is currently trying to deploy"
     echo "exiting..."
 else
-    echo $(whoami) > $deployerfile
+    echo $1 > $deployerfile
     k=1
     docker-compose build api
     docker-compose build --no-cache front

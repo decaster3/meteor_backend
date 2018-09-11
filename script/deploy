@@ -36,7 +36,7 @@ if [[ -n $MESSAGE ]]; then
             ;;
     esac
 fi
-
+me=$(whoami)
 printf "${grn}Connecting to meteorfood.com\n${end}"
 ssh meteor@meteorfood.com -p 922 << EOF
                                     cd /var/www/meteor;
@@ -44,5 +44,5 @@ ssh meteor@meteorfood.com -p 922 << EOF
                                     git reset --hard origin/master
                                     git pull --force;
                                     printf "${grn}++++++++\nPulled\n++++++++${end}\n";
-                                    ./script/restart;
+                                    ./script/restart me;
                                     EOF
