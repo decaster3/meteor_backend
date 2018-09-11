@@ -24,6 +24,7 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [[ -n $MESSAGE ]]; then
+    git status
     read -r -p "${red}Are you sure you want to commit and push? [y/N]${end} " response
     case "$response" in
         [yY][eE][sS]|[yY])
