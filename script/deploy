@@ -1,10 +1,13 @@
 #! /bin/sh
-echo "Connecting to meteorfood.com"
+grn=$'\e[1;32m'
+end=$'\e[0m'
+printf "${grn}Connecting to meteorfood.com\n${end}"
 ssh meteor@meteorfood.com -p 922 << EOF
                                     cd /var/www/meteor;
-                                    echo "Starting";
+                                    printf "${grn}++++++++\nStarting\n++++++++\n${end}";
                                     git reset --hard origin/master;
-                                    echo "Pulled";
+                                    printf "${grn}++++++++\nPulled\n++++++++${end}\n";
                                     ./script/restart;
-                                    echo "Restarted";
+                                    printf "${grn}++++++++\nRestarted\n++++++++${end}\n"
                                     EOF
+printf "${grn}++++++++\nRestarted\n++++++++${end}\n"
