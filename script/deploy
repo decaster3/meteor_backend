@@ -9,6 +9,4 @@ ssh meteor@meteorfood.com -p 922 << EOF
                                     git pull --force;
                                     printf "${grn}++++++++\nPulled\n++++++++${end}\n";
                                     ./script/restart;
-                                    printf "${grn}++++++++\nRestarted\n++++++++${end}\n"
                                     EOF
-printf "${grn}++++++++\nRestarted\n++++++++${end}\n"
