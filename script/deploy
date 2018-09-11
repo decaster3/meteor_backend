@@ -17,7 +17,19 @@ case $key in
 esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
+
 if [[ -n $MESSAGE ]]; then
     git commit -am "$MESSAGE"
     git push
 fi
+grn=$'\e[1;32m'
+end=$'\e[0m'
+printf "${grn}Connecting to meteorfood.com\n${end}"
+ssh meteor@meteorfood.com -p 922 << EOF
+                                    cd /var/www/meteor;
+                                    printf "${grn}++++++++\nStarting\n++++++++\n${end}";
+                                    git reset --hard origin/master
+                                    git pull --force;
+                                    printf "${grn}++++++++\nPulled\n++++++++${end}\n";
+                                    ./script/restart;
+                                    EOF
