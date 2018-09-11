@@ -1,2 +1,5 @@
 #! /bin/sh
-git commit -am "$1"
+ssh meteor@meteorfood.com -p 922 << EOF
+                                    cd /var/www/meteor;
+                                    docker-compose down;
+                                    EOF
