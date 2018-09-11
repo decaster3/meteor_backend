@@ -1,29 +1,42 @@
 #! /bin/sh
+grn=$'\e[1;32m'
+red=$'\e[1;31m'
+ylw=$'\e[1;33m'
+end=$'\e[0m'
+printf "${grn}Connecting to meteorfood.com\n${end}"
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
-key="$1"
+    key="$1"
 
-case $key in
-    -m|--message)
-    MESSAGE="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    *)    # unknown option
-    POSITIONAL+=("$1") # save it in an array for later
-    shift # past argument
-    ;;
-esac
+    case $key in
+        -m|--message)
+        MESSAGE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
 done
+
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [[ -n $MESSAGE ]]; then
-    git commit -am "$MESSAGE"
-    git push
+    read -r -p "${red}Are you sure you want to commit and push? [y/N]${end} " response
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            printf "${grn}Commit with message ${ylw}$MESSAGE${end}\n${end}"
+            git commit -am "$MESSAGE"
+            git push
+            ;;
+        *)
+            ;;
+    esac
 fi
-grn=$'\e[1;32m'
-end=$'\e[0m'
+
 printf "${grn}Connecting to meteorfood.com\n${end}"
 ssh meteor@meteorfood.com -p 922 << EOF
                                     cd /var/www/meteor;
