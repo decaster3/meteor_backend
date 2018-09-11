@@ -44,5 +44,5 @@ ssh meteor@meteorfood.com -p 922 << EOF
                                     git reset --hard origin/master
                                     git pull --force;
                                     printf "${grn}++++++++\nPulled\n++++++++${end}\n";
-                                    ./script/restart me;
+                                    ./script/restart $me;
                                     EOF
