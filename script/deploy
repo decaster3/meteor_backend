@@ -28,7 +28,6 @@ if [[ -n $MESSAGE ]]; then
     read -r -p "${red}Are you sure you want to commit and push? [y/N]${end} " response
     case "$response" in
         [yY][eE][sS]|[yY])
-            printf "${grn}Commit with message ${ylw}$MESSAGE${end}\n${end}"
             git commit -am "$MESSAGE"
             git push
             ;;
