@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  before_action :cors_set_access_control_headers
+  # before_action :cors_set_access_control_headers
   include Response
   include ExceptionHandler
 
