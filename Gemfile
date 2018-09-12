@@ -56,6 +56,7 @@ gem 'kazkom_epay'
 gem 'olive_branch'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'plivo', '>= 4.0.0'
+gem 'rack-cors', require: 'rack/cors'
 gem 'rspec', groups: %i[development test]
 gem 'rspec-rails', groups: %i[development test]
 gem 'seed_dump', groups: %i[development test]
