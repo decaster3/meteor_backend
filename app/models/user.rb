@@ -46,21 +46,12 @@ class User < ApplicationRecord
   # attr_accessor :inviter
   # attr_accessible :inviter
 
-  def verified?
-    !confirmed_at.nil?
-  end
-
-  def verify
-    self.confirmed_at = Time.now
-    save
-  end
-
   def possible_to_send_sms?
-    Time.now - confirmation_sent_at > 2.seconds
+    Time.now - confirmation_sent_at > 1.minute
   end
 
   def confirmed?
-    confirmed_at.nil?
+    !confirmed_at.nil?
   end
 
   def confirm?(code)

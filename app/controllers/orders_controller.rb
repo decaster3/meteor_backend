@@ -2,7 +2,8 @@
 
 class OrdersController < ApplicationController
   include Orderable
-
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
   before_action :set_order, only: %i[update destroy]
 
   # GET /orders

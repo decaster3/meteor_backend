@@ -1,4 +1,6 @@
 class CountriesController < ApplicationController
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
   before_action :set_country, only: [:show, :update, :destroy]
 
   # GET /countries

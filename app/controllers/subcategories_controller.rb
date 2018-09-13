@@ -1,4 +1,6 @@
 class SubcategoriesController < ApplicationController
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
   before_action :set_category
   before_action :set_subcategory, only: [:update, :destroy, :show]
 

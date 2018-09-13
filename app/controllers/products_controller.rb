@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
   before_action :set_product, only: %i[update destroy show]
-  # before_action :admin_only, only: %i[create update destroy]
 
   def index
     city = City.find(params[:city_id])

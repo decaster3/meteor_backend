@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PromotionsController < ApplicationController
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
   before_action :set_promotion, only: %i[show update destroy]
 
   # GET /promotions

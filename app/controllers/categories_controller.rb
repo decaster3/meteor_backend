@@ -2,6 +2,8 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[update destroy show]
+  before_action :authenticate
+  before_action :admin_only, only: %i[update create destroy]
 
   def index
     @categories = Category.includes(:option_names).all

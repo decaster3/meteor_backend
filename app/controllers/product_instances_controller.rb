@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ProductInstancesController < ApplicationController
+  before_action :authenticate
+  before_action :admin_only, only: %i[create destroy]
+
   before_action :set_product
   before_action :set_product_instance, only: %i[destroy show]
 

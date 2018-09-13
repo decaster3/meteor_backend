@@ -11,18 +11,18 @@ class UsersController < ApplicationController
       @user = User.includes(
         :inviter
       ).find_by(phone: "+#{params[:phone].strip}")
-      json_response({
+      json_response(
         id: @user.id,
         name: @user.name,
         token: @user.token,
         phone: @user.alexey_phone_format,
         role: @user.role,
         inviter: {
-            id: @user.inviter.id,
-            name: @user.inviter.name,
-            phone: @user.inviter.alexey_phone_format
+          id: @user.inviter.id,
+          name: @user.inviter.name,
+          phone: @user.inviter.alexey_phone_format
         }
-      })
+      )
     else
       :authenticate
       if current_user
