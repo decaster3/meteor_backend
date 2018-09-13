@@ -135,6 +135,14 @@ class User < ApplicationRecord
     }
   end
 
+  def alexey_phone_format
+    phone = self.phone
+    if phone_valid?(phone)
+      phone = "8(#{phone[2..4]})#{phone[5..7]}-#{phone[8..9]}-#{phone[10..11]}"
+    end
+    phone
+  end
+
   private
 
   def set_default_role
@@ -156,5 +164,8 @@ class User < ApplicationRecord
     111_111
   end
 
+  def phone_valid?(phone)
+    phone.length == 12 && phone[1] == '7'
+  end
   # def make order()
 end

@@ -15,37 +15,7 @@ module Orderable
         ]
       ]
     ).find(params[:id])
-    @order = {
-      id: @order.id,
-      status: @order.status,
-      payment_method: @order.payment_method,
-      created_at: @order.created_at,
-      updated_at: @order.updated_at,
-      delivery_time: @order.delivery_time,
-      amount: @order.amount,
-      meteors: @order.meteors,
-      discount: (@order.amount / @order.total),
-      comment: @order.address.comment,
-      address: {
-        id: @order.address.id,
-        street: @order.address.street,
-        building: @order.address.building,
-        apartment: @order.address.apartment,
-        city: @order.address.city.name
-      },
-      user: {
-        id: @order.user.id,
-        name: @order.user.name,
-        phone: @order.user.phone
-      },
-      products: @order.order_products.each.map do |op|
-                  {
-                    barcode: op.product_instance.barcode,
-                    quantity: op.quantity,
-                    price: op.product_instance.price,
-                  }
-                end
-    }
+    @order = construct_order(@order)
   end
 
   def index_logic
@@ -125,14 +95,14 @@ module Orderable
       user: {
         id: order.user.id,
         name: order.user.name,
-        phone: order.user.phone
+        phone: order.user.alexey_phone_format
       },
       products: order.order_products.each.map do |op|
-        {
-            barcode: op.product_instance.barcode,
-            quantity: op.quantity,
-            price: op.product_instance.price,
-        }
+                  {
+                    barcode: op.product_instance.barcode,
+                    quantity: op.quantity,
+                    price: op.product_instance.price
+                  }
                 end
     }
   end
