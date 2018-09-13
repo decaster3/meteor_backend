@@ -3,7 +3,7 @@
 class CitiesController < ApplicationController
   # before_action :set_country
   before_action :set_city, only: %i[update destroy show]
-  before_action :authenticate
+  before_action :authenticate, only: %i[update create destroy]
   before_action :admin_only, only: %i[update create destroy]
 
   def index
