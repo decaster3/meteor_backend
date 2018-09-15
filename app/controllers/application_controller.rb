@@ -25,7 +25,7 @@ class ApplicationController < ActionController::API
 
   def authenticate
     if authenticate_user!
-      if current_user.confirmed?
+      if current_user.not_confirmed?
         render json: {error: 'User not confirmed.'}, status: 400
         true
       else

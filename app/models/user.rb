@@ -54,6 +54,10 @@ class User < ApplicationRecord
     !confirmed_at.nil?
   end
 
+  def not_confirmed?
+    confirmed_at.nil?
+  end
+
   def confirm?(code)
     confirmation_code == code
   end
