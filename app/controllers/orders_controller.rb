@@ -2,8 +2,9 @@
 
 class OrdersController < ApplicationController
   include Orderable
-  before_action :authenticate
+  before_action :authenticate, except: %i[create]
   before_action :set_order, only: %i[update destroy]
+  before_action :admin_only, except: %i[create]
 
   # GET /orders
   def index
@@ -61,6 +62,13 @@ class OrdersController < ApplicationController
 
   def address_params
     params.require(:address)
-          .permit(:street, :building, :apartment, :comment, :city_id)
+          .permit(:street,
+                  :building,
+                  :apartment,
+                  :comment,
+                  :city_id,
+                  :floor,
+                  :entrance,
+                  :intercom)
   end
 end
