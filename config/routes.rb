@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     post '/pay/process', to: 'pay#process_payment'
     resources :promotions
     resources :orders
-
+    resources :streets
     resources :countries
     resources :cities
 

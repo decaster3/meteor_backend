@@ -13,6 +13,7 @@ else
     docker-compose up -d
     docker-compose run api rails db:create
     docker-compose run api rails db:migrate
+    docker-compose run api rails db:seed
     docker kill $(docker ps -a -f name=api_run -q)
     docker rm $(docker ps -a -f name=api_run -q)
 fi

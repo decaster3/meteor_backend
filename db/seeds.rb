@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-if City.all.size > 0
+if City.all.size == 0
   Country.create!([
                       {name: 'Казахстан'},
                       {name: 'Киргизстан'}
@@ -223,4 +223,12 @@ if City.all.size > 0
   OrderProduct.create!([{quantity: 1, product_instance_id: 1, order_id: 2}, {quantity: 3, product_instance_id: 2, order_id: 2},])
 else
   p "Seeds have been already seeded"
+end
+Street.all.each {|s| s.delete}
+if Street.all.size == 0
+  file=File.open("#{__dir__}/streets.txt", "r")
+  file.each do |line|
+    Street.create!(name: line.strip)
+  end
+  file.close
 end
