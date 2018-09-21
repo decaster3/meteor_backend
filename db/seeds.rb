@@ -224,7 +224,6 @@ if City.all.size == 0
 else
   p "Seeds have been already seeded"
 end
-Street.all.each {|s| s.delete}
 if Street.all.size == 0
   file=File.open("#{__dir__}/streets.txt", "r")
   file.each do |line|
