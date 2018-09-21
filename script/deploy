@@ -37,7 +37,7 @@ if [[ -n $MESSAGE ]]; then
 fi
 me=$(whoami)
 printf "${grn}Connecting to meteorfood.com\n${end}"
-ssh meteor@89.223.28.86.com -p 922 << EOF
+ssh meteor@89.223.28.86 -p 922 << EOF
                                     cd /var/www/meteor;
                                     printf "${grn}++++++++\nStarting\n++++++++\n${end}";
                                     git reset --hard origin/master
