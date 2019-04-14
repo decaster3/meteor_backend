@@ -102,7 +102,8 @@ if City.all.size == 0
                        {name: 'Напитки'},
                        {name: "Сеты"}
                    ])
-  Subcategory.create!(name: 'ololo', category_id: 1)
+  Subcategory.create!(name: 'Вегатрианские', category_id: 1)
+  Subcategory.create!(name: 'Мясные', category_id: 1)
   OptionName.create!([
                          {name: 'размер', category_id: 1, is_characteristic: false},
                          {name: 'тесто', category_id: 1, is_characteristic: false},
@@ -208,8 +209,9 @@ if City.all.size == 0
                             {product_instance_id: 12, option_value_id: 17}
 
                         ])
-  User.create!(name: 'Rinat', phone: '+79991571024', password: 'qweqweqwe')
-  u = User.create!(name: 'Rinat', phone: '+79999999999', password: 'qweqweqwe')
+  User.create!(name: 'Rinat', phone: '+79991571024', password: 'qweqweqwe', confirmed_at: Time.now)
+  User.create!(name: 'Rinat Admin', phone: '+79990000000', password: 'qweqweqwe', role: :admin, confirmed_at: Time.now)
+  u = User.create!(name: 'Rinat', phone: '+79999999999', password: 'qweqweqwe', confirmed_at: Time.now)
   u.inviter = User.first
   u.save
   Address.create!([{street: "АЙТИЕВА", building: "28", apartment: "64", comment: "домофон есть", city_id: 1}])
