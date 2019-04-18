@@ -94,6 +94,7 @@ class User < ApplicationRecord
     orders = user.orders.map do |order|
       {
         "id": order.id,
+        "city_id": order.city.id,
         "currency": order.city.currency,
         "payment_method": order.payment_method,
         "total": order.total,
