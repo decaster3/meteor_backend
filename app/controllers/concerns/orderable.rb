@@ -85,6 +85,7 @@ module Orderable
       meteors: order.meteors,
       discount: (order.amount / order.total),
       comment: order.address.comment,
+      city_id: order.address.city.id,
       address: {
         id: order.address.id,
         street: order.address.street,
