@@ -32,7 +32,7 @@ services:
         - nginx
       restart: always
       environment:
-        DOMAINS: "meteorfood.com -> http://nginx:80, meteorfood.kz -> http://nginx:80"
+        DOMAINS: "meteorfood.com -> http://nginx:80"
         STAGE: "staging"
   nginx:
         image: nginx
