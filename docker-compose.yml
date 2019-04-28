@@ -22,7 +22,7 @@ services:
     volumes:
       - front-volume:/meteor-frontend
   https-portal:
-      image: steveltn/https-portal:1
+      image: steveltn/https-portal:1.7
       ports:
         - "80:80"
         - "443:443"
