@@ -21,18 +21,27 @@ services:
       dockerfile: front.dockerfile
     volumes:
       - front-volume:/meteor-frontend
-  nginx:
-      image: nginx
-      volumes:
-        - ./nginx.conf:/etc/nginx/nginx.conf
-        - front-volume:/meteor-frontend
+  https-portal:
+      image: steveltn/https-portal:1
       ports:
-            - "8000:8000"
-            - "443:443"
-            - "80:80"
-      depends_on:
+        - "80:80"
+        - "443:443"
+      links:
         - api
+      depends_on:
+        - nginx
       restart: always
+      environment:
+        DOMAINS: "meteorfood.com -> http://nginx:8000, meteorfood.kz -> http://nginx:8000"
+        STAGE: "staging"
+  nginx:
+        image: nginx
+        volumes:
+          - ./nginx.conf:/etc/nginx/nginx.conf
+          - front-volume:/meteor-frontend
+        depends_on:
+          - api
+        restart: always
 
 volumes:
   ? front-volume
