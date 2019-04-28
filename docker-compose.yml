@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  api:
+  rails:
     build:
       context: .
       dockerfile: rails.dockerfile
@@ -27,7 +27,7 @@ services:
         - "80:80"
         - "443:443"
       links:
-        - api
+        - rails
       depends_on:
         - nginx
       restart: always
@@ -40,7 +40,7 @@ services:
           - ./nginx.conf:/etc/nginx/nginx.conf
           - front-volume:/meteor-frontend
         depends_on:
-          - api
+          - rails
         restart: always
 
 volumes:
