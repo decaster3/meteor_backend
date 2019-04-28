@@ -36,8 +36,8 @@ services:
         - nginx
       restart: always
       environment:
-        DOMAINS: "meteorfood.com -> http://nginx:80"
-        STAGE: "staging"
+        DOMAINS: "meteorfood.com -> http://nginx:80, meteorfood.kz -> http://nginx:80"
+        STAGE: "production"
   nginx:
         image: nginx
         volumes:
