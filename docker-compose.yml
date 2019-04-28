@@ -23,11 +23,15 @@ services:
       - front-volume:/meteor-frontend
   https-portal:
       image: steveltn/https-portal:1.7
+      volumes:
+        - front-volume:/meteor-frontend
       ports:
         - "80:80"
         - "443:443"
       links:
         - rails
+        - front
+        - nginx
       depends_on:
         - nginx
       restart: always
